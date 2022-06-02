@@ -33,5 +33,8 @@ For detailed usage examples, see the [notebooks](notebooks) directory.
 [colab]: <https://colab.research.google.com/assets/colab-badge.svg>
 [composable-glide]: <https://colab.research.google.com/github/nanlliu/composable-diffusion-pytorch/blob/master/notebooks/compose_glide.ipynb>
 
-We also provide python scripts for inference for people who wish to run on their own GPUs.
- * See the [scripts](scripts) directory.
+For python inference scripts to run on your own GPUs. See the [scripts](scripts) directory.
+ * The python script version of [composable_glide](notebooks/compose_glide.ipynb)
+    ```
+    python scripts/image_sample_compose_glide.py
+    ``` 
