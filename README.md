@@ -22,6 +22,8 @@ This is the official codebase for **Compositional Generation using Diffusion Mod
     [Arxiv 2022]()
 
 
+
+--------------------------------------------------------------------------------------------------------
 * This code is the basic version of our paper. We will release the final version soon.
 * The codebase is built upon [GLIDE](https://github.com/openai/glide-text2im).
 
