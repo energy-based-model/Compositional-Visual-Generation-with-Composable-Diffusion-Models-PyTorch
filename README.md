@@ -4,7 +4,7 @@
 [![][colab]][composable-glide]
 
 This is the official codebase for **Compositional Generation using Diffusion Models**.
-The codebase is heavily built upon [GLIDE: Towards Photorealistic Image Generation and Editing with Text-Guided Diffusion Models](https://github.com/openai/glide-text2im).
+The codebase is heavily built upon [GLIDE](https://github.com/openai/glide-text2im).
 
 [Compositional Visual Generation with Composable Diffusion Models](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/)
     <br>
