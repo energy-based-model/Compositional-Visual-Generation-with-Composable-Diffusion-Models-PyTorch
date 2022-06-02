@@ -4,6 +4,13 @@
 [![][colab]][composable-glide]
 
 
+
+This is the official codebase for **Compositional Generation using Diffusion Models**.
+* This code is the basic version of our paper. We will release the final version soon.
+* The codebase is built upon [GLIDE](https://github.com/openai/glide-text2im).
+
+
+```
 [Compositional Visual Generation with Composable Diffusion Models](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/)
     <br>
     [Nan Liu](https://nanliu.io) <sup>1*</sup>,
@@ -17,11 +24,7 @@
     <sup>1</sup>UIUC, <sup>2</sup>MIT CSAIL
     <br>
     [Arxiv 2022]()
-
-
-This is the official codebase for **Compositional Generation using Diffusion Models**.
-* This code is the basic version of our paper. We will release the final version soon.
-* The codebase is built upon [GLIDE](https://github.com/openai/glide-text2im).
+```
 
 
 
