@@ -26,15 +26,21 @@ To install this package, clone this repository and then run:
 pip install -e .
 ```
 
-For detailed usage examples, see the [notebooks](notebooks) directory.
 
- * The [composable_glide](notebooks/compose_glide.ipynb) [![][colab]][composable-glide] notebook shows how to use GLIDE for compositional generation.
 
 [colab]: <https://colab.research.google.com/assets/colab-badge.svg>
-[composable-glide]: <https://colab.research.google.com/github/nanlliu/composable-diffusion-pytorch/blob/master/notebooks/compose_glide.ipynb>
+[composable-glide]: <https://colab.research.google.com/github/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/notebooks/compose_glide.ipynb>
 
-For python inference scripts to run on your own GPUs. See the [scripts](scripts) directory.
- * The python script version of [composable_glide](notebooks/compose_glide.ipynb)
-    ```
-    python scripts/image_sample_compose_glide.py
-    ``` 
+
+* notebook
+The [![][colab]][composable-glide] shows how to use GLIDE for compositional generation.
+
+* python script
+```
+python scripts/image_sample_compose_glide.py
+``` 
+* notebook
+```
+[composable_glide](notebooks/compose_glide.ipynb)
+```
+ 
