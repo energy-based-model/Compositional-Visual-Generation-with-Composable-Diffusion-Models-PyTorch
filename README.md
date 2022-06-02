@@ -4,7 +4,9 @@
 [![][colab]][composable-glide]
 
 This is the official codebase for **Compositional Generation using Diffusion Models**.
-The codebase is heavily built upon [GLIDE](https://github.com/openai/glide-text2im).
+* This code is the basic version of our paper. We will release the final version soon.
+* The codebase is built upon [GLIDE](https://github.com/openai/glide-text2im).
+
 
 [Compositional Visual Generation with Composable Diffusion Models](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/)
     <br>
@@ -27,20 +29,17 @@ pip install -e .
 ```
 
 
-
 [colab]: <https://colab.research.google.com/assets/colab-badge.svg>
 [composable-glide]: <https://colab.research.google.com/github/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/notebooks/compose_glide.ipynb>
 
 
-* notebook
-The [![][colab]][composable-glide] shows how to use GLIDE for compositional generation.
 
-* python script
-```
-python scripts/image_sample_compose_glide.py
-``` 
-* notebook
-```
-[composable_glide](notebooks/compose_glide.ipynb)
-```
+For detailed usage examples, see the [notebooks](notebooks) directory.
+ * The [composable_glide](notebooks/compose_glide.ipynb) [![][colab]][composable-glide] notebook shows how to compose GLIDE for image generation.
+
+
+For python inference scripts to run on your own GPUs.
+    ```
+    python scripts/image_sample_compose_glide.py
+    ``` 
  
