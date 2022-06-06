@@ -1,6 +1,6 @@
 # Composable Diffusion
 
-### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/)
+### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf)
 [![][colab]][composable-glide]
 
 
@@ -19,7 +19,7 @@ This is the official codebase for **Compositional Generation using Diffusion Mod
     <br>
     <sup>1</sup>UIUC, <sup>2</sup>MIT CSAIL
     <br>
-    [Arxiv 2022]()
+    [Arxiv 2022](https://arxiv.org/pdf/2206.01714.pdf)
 
 
 
