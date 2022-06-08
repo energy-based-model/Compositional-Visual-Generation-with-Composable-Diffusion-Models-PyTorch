@@ -185,5 +185,4 @@ class Predictor(BasePredictor):
 
         output_path = Path(tempfile.mkdtemp()) / "output.png"
         Image.fromarray(reshaped.numpy()).save(str(output_path))
-        Image.fromarray(reshaped.numpy()).save("222.png")
         return output_path
