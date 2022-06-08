@@ -1,6 +1,6 @@
 # Composable Diffusion
 
-### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf)
+### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf) | [Demo] (https://huggingface.co/spaces/Shuang59/Composable-Diffusion)
 [![][colab]][composable-glide]
 
 
