@@ -3,6 +3,9 @@
 ### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf)
 [![][colab]][composable-glide]
 
+Try Replicate web demo here [![Replicate](https://replicate.com/energy-based-model/compositional-vsual-generation-with-composable-diffusion-models-pytorch/badge)](https://replicate.com/energy-based-model/compositional-vsual-generation-with-composable-diffusion-models-pytorch)
+
+
 
 
 This is the official codebase for **Compositional Visual Generation with Composable Diffusion Models**.
