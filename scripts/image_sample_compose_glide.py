@@ -1,5 +1,4 @@
 from PIL import Image
-from IPython.display import display
 import torch as th
 import argparse
 
@@ -14,7 +13,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--timestep_respacing', type=int, default=100)
 parser.add_argument('--guidance_scale', type=float, default=10)
 parser.add_argument('--upsample_temp', type=float, default=0.98)
-parser.add_argument('--prompt', type=str, default='a dog, the sky', help="using comma to compose multiple sentences")
+parser.add_argument('--prompt', type=str, default='a camel | a forest', help="using `|` to compose multiple sentences")
 args = parser.parse_args()
 
 has_cuda = th.cuda.is_available()
@@ -53,7 +52,7 @@ def show_images(batch: th.Tensor, file_name):
 
 # Sampling parameters
 prompt = args.prompt
-prompts = [x.strip() for x in prompt.split(',')]
+prompts = [x.strip() for x in prompt.split('|')]
 batch_size = 1
 guidance_scale = args.guidance_scale
 # Tune this parameter to control the sharpness of 256x256 images.
