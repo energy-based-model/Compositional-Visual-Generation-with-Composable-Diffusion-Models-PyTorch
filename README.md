@@ -25,7 +25,7 @@ This is the official codebase for **Compositional Visual Generation with Composa
 
 --------------------------------------------------------------------------------------------------------
 * The codebase is built upon [GLIDE](https://github.com/openai/glide-text2im).
-* This code is used for composing natural language descriptions only (based on the released [GLIDE](https://github.com/openai/glide-text2im) model). We will release the pre-trained models for composing objects and objects relations soon.
+* This code is used for composing natural language descriptions only (based on the released [GLIDE](https://github.com/openai/glide-text2im) model). We will release the models for composing objects and objects relations soon.
 
 
 
