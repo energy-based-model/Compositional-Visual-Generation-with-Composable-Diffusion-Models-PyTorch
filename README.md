@@ -19,7 +19,7 @@ This is the official codebase for **Compositional Visual Generation with Composa
     <br>
     <sup>1</sup>UIUC, <sup>2</sup>MIT CSAIL
     <br>
-    [Arxiv 2022](https://arxiv.org/pdf/2206.01714.pdf)
+    [ECCV 2022](https://arxiv.org/pdf/2206.01714.pdf)
 
 
 
