@@ -24,7 +24,10 @@ setup(
         "tqdm",
         "ftfy",
         "regex",
-        "numpy"
+        "numpy",
+        "blobfile",
+        "mpi4py",
+        "torchvision"
     ],
     author="nanliu",
 )

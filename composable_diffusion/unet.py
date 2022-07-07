@@ -115,17 +115,17 @@ class ResBlock(TimestepBlock):
     """
 
     def __init__(
-        self,
-        channels,
-        emb_channels,
-        dropout,
-        out_channels=None,
-        use_conv=False,
-        use_scale_shift_norm=False,
-        dims=2,
-        use_checkpoint=False,
-        up=False,
-        down=False,
+            self,
+            channels,
+            emb_channels,
+            dropout,
+            out_channels=None,
+            use_conv=False,
+            use_scale_shift_norm=False,
+            dims=2,
+            use_checkpoint=False,
+            up=False,
+            down=False,
     ):
         super().__init__()
         self.channels = channels
@@ -213,12 +213,12 @@ class AttentionBlock(nn.Module):
     """
 
     def __init__(
-        self,
-        channels,
-        num_heads=1,
-        num_head_channels=-1,
-        use_checkpoint=False,
-        encoder_channels=None,
+            self,
+            channels,
+            num_heads=1,
+            num_head_channels=-1,
+            use_checkpoint=False,
+            encoder_channels=None,
     ):
         super().__init__()
         self.channels = channels
@@ -226,7 +226,7 @@ class AttentionBlock(nn.Module):
             self.num_heads = num_heads
         else:
             assert (
-                channels % num_head_channels == 0
+                    channels % num_head_channels == 0
             ), f"q,k,v channels {channels} is not divisible by num_head_channels {num_head_channels}"
             self.num_heads = channels // num_head_channels
         self.use_checkpoint = use_checkpoint
@@ -314,26 +314,26 @@ class UNetModel(nn.Module):
     """
 
     def __init__(
-        self,
-        in_channels,
-        model_channels,
-        out_channels,
-        num_res_blocks,
-        attention_resolutions,
-        dropout=0,
-        channel_mult=(1, 2, 4, 8),
-        conv_resample=True,
-        dims=2,
-        num_classes=None,
-        use_checkpoint=False,
-        use_fp16=False,
-        num_heads=1,
-        num_head_channels=-1,
-        num_heads_upsample=-1,
-        use_scale_shift_norm=False,
-        resblock_updown=False,
-        encoder_channels=None,
-        dataset=''
+            self,
+            in_channels,
+            model_channels,
+            out_channels,
+            num_res_blocks,
+            attention_resolutions,
+            dropout=0,
+            channel_mult=(1, 2, 4, 8),
+            conv_resample=True,
+            dims=2,
+            num_classes=None,
+            use_checkpoint=False,
+            use_fp16=False,
+            num_heads=1,
+            num_head_channels=-1,
+            num_heads_upsample=-1,
+            use_scale_shift_norm=False,
+            resblock_updown=False,
+            encoder_channels=None,
+            dataset=''
     ):
         super().__init__()
 
@@ -366,18 +366,7 @@ class UNetModel(nn.Module):
 
         if self.num_classes:
             layer_classes = self.num_classes.split(',')
-            if self.dataset in {'coco', 'ade20k', 'flowers102', 'cup200', 'ffhq_sub', 'online', 'birds_flowers', 'celeba'}:
-                assert len(layer_classes) == 1
-                self.label_emb = nn.Embedding(int(layer_classes[0]), self.time_embed_dim)
-            elif self.dataset == 'ffhq':
-                self.label_emb = nn.ModuleList(
-                    [nn.Linear(1, self.time_embed_dim) if int(classes) == 73
-                     else nn.Embedding(int(classes), self.time_embed_dim)
-                     for classes in layer_classes]
-                )
-                # unconditional label
-                self.null_emb = nn.Embedding(1, self.time_embed_dim)
-            elif self.dataset == 'clevr_pos':
+            if self.dataset == 'clevr_pos':
                 self.label_emb = nn.Linear(int(layer_classes[0]), self.time_embed_dim)
                 # unconditional label
                 self.null_emb = nn.Embedding(1, self.time_embed_dim)
@@ -561,7 +550,7 @@ class UNetModel(nn.Module):
         :return: an [N x C x ...] Tensor of outputs.
         """
         assert (y is not None) == (
-            self.num_classes is not None
+                self.num_classes is not None
         ), "must specify y if and only if the model is class-conditional"
 
         hs = []
@@ -569,23 +558,7 @@ class UNetModel(nn.Module):
 
         if self.num_classes:
             # assert y.shape == (x.shape[0],)   # assert for discrete class labels
-            if self.dataset in {'coco', 'ade20k', 'flowers102', 'cup200',
-                                'ffhq_sub', 'online', 'birds_flowers', 'celeba'}:
-                assert layer_idx is None
-                label_emb = self.label_emb(y.long())
-                emb = emb + label_emb
-            elif self.dataset == 'ffhq':
-                assert layer_idx is not None
-                label_emb = th.empty((y.shape[0], emb.shape[1]), device=y.device)
-                label_emb[~masks] = self.null_emb.weight[0][None].repeat(label_emb[~masks].shape[0], 1)
-                if layer_idx == 2:
-                    # age 0-73
-                    normalized_y = y[masks].reshape(-1, 1) / 73.
-                    label_emb[masks] = self.label_emb[layer_idx](normalized_y)
-                else:
-                    label_emb[masks] = self.label_emb[layer_idx](y[masks])
-                emb = emb + label_emb
-            elif self.dataset == 'clevr_pos':
+            if self.dataset == 'clevr_pos':
                 label_emb = th.empty((y.shape[0], self.time_embed_dim), device=y.device)
                 label_emb[masks] = self.label_emb(y[masks])
                 # replace null labels with special embeddings
@@ -597,7 +570,7 @@ class UNetModel(nn.Module):
                 label_emb[~masks] = self.null_emb.weight[0][None].repeat(label_emb[~masks].shape[0], 1)
                 # embed objects and relations
                 obj_emb_1 = self.fc(th.cat([self.obj_emb[i](y[masks][:, i]) for i in range(5)], dim=1))
-                obj_emb_2 = self.fc(th.cat([self.obj_emb[i-5](y[masks][:, i]) for i in range(5, 10)], dim=1))
+                obj_emb_2 = self.fc(th.cat([self.obj_emb[i - 5](y[masks][:, i]) for i in range(5, 10)], dim=1))
                 rel_emb = self.rel_emb(y[masks][:, -1])
                 label_emb[masks] = th.cat((obj_emb_1, obj_emb_2, rel_emb), dim=1)
                 emb = emb + label_emb
@@ -639,7 +612,7 @@ class SuperResUNetModel(UNetModel):
         x = th.cat([x, upsampled], dim=1)
         return super().forward(x, timesteps, **kwargs)
 
-    
+
 class InpaintUNetModel(UNetModel):
     """
     A UNetModel which can perform inpainting.
@@ -683,13 +656,13 @@ class SuperResInpaintUNetModel(UNetModel):
         super().__init__(*args, **kwargs)
 
     def forward(
-        self,
-        x,
-        timesteps,
-        inpaint_image=None,
-        inpaint_mask=None,
-        low_res=None,
-        **kwargs,
+            self,
+            x,
+            timesteps,
+            inpaint_image=None,
+            inpaint_mask=None,
+            low_res=None,
+            **kwargs,
     ):
         if inpaint_image is None:
             inpaint_image = th.zeros_like(x)
