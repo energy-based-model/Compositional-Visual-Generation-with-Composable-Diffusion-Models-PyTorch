@@ -26,7 +26,6 @@ setup(
         "regex",
         "numpy",
         "blobfile",
-        "mpi4py",
         "torchvision"
     ],
     author="nanliu",
