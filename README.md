@@ -119,8 +119,8 @@ If you need to manually download, the datasets used for training our models can 
 
 | Dataset | Link | 
 | :---: | :---: | 
-| CLEVR_POS | https://www.dropbox.com/s/5zj9ci24ofo949l/clevr_pos_data_128_30000.npz?dl=0
-| CLEVR_REL | https://www.dropbox.com/s/urd3zgimz72aofo/clevr_training_data_128.npz?dl=0
+| CLEVR Objects | https://www.dropbox.com/s/5zj9ci24ofo949l/clevr_pos_data_128_30000.npz?dl=0
+| CLEVR Relations | https://www.dropbox.com/s/urd3zgimz72aofo/clevr_training_data_128.npz?dl=0
 --------------------------------------------------------------------------------------------------------
 
 ## Citing our Paper
