@@ -10,6 +10,7 @@ import torch as th
 
 import numpy as np
 
+from pycocotools.coco import COCO
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 from collections import namedtuple
@@ -191,6 +192,52 @@ class Clevr2DPosDataset(Dataset):
         return np.transpose(arr, [2, 0, 1]), out_dict
 
 
+class CocoDataset(data.Dataset):
+    """COCO Custom Dataset compatible with torch.utils.data.DataLoader."""
+
+    def __init__(self, root, json, resolution, random_crop=False, random_flip=False):
+        """Set the path for images, captions and vocabulary wrapper.
+
+        Args:
+            root: image directory.
+            json: coco annotation file path.
+            vocab: vocabulary wrapper.
+            transform: image transformer.
+        """
+        self.root = root
+        self.coco = COCO(json)
+        self.ids = list(self.coco.anns.keys())
+        self.resolution = resolution
+        self.random_crop = random_crop
+        self.random_flip = random_flip
+
+    def __getitem__(self, index):
+        """Returns one data pair (image and caption)."""
+        coco = self.coco
+        ann_id = self.ids[index]
+        caption = coco.anns[ann_id]['caption']
+        img_id = coco.anns[ann_id]['image_id']
+        path = coco.loadImgs(img_id)[0]['file_name']
+
+        image = Image.open(os.path.join(self.root, path)).convert('RGB')
+
+        if self.random_crop:
+            arr = random_crop_arr(image, self.resolution)
+        else:
+            arr = center_crop_arr(image, self.resolution)
+
+        if self.random_flip and random.random() < 0.5:
+            arr = arr[:, ::-1]
+
+        arr = arr.astype(np.float32) / 127.5 - 1
+        out_dict = {'caption': caption}
+
+        return arr, out_dict
+
+    def __len__(self):
+        return len(self.ids)
+
+
 def load_data(
     *,
     root,
@@ -220,6 +267,17 @@ def load_data(
             resolution=image_size,
             data_path=data_path,
             use_captions=use_captions,
+            random_crop=random_crop,
+            random_flip=random_flip
+        )
+    elif dataset_type == 'coco':
+        # specify the root path and json path
+        root = None
+        json = None
+        dataset = CocoDataset(
+            root,
+            json,
+            resolution=image_size,
             random_crop=random_crop,
             random_flip=random_flip
         )

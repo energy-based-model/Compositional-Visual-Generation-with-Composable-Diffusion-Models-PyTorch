@@ -26,6 +26,7 @@ This is the official codebase for **Compositional Visual Generation with Composa
 --------------------------------------------------------------------------------------------------------
 * The codebase is built upon [GLIDE](https://github.com/openai/glide-text2im) and [Improved-Diffusion](https://github.com/openai/improved-diffusion).
 * This codebase provides both training and inference code.
+* **The codebase can be used to train text-conditioned diffusion model in a similar manner as [GLIDE](https://github.com/openai/glide-text2im).**
 
 --------------------------------------------------------------------------------------------------------
 [colab]: <https://colab.research.google.com/assets/colab-badge.svg>
@@ -67,6 +68,18 @@ DIFFUSION_FLAGS="--diffusion_steps 1000 --noise_schedule squaredcos_cap_v2 --res
 TRAIN_FLAGS="--lr 1e-5 --batch_size 16 --use_kl False --schedule_sampler loss-second-moment --microbatch -1"
 python scripts/image_train.py --data_dir ./dataset/ --dataset clevr_rel $MODEL_FLAGS $DIFFUSION_FLAGS $TRAIN_FLAGS
 ```
+
+To train a text-conditioned GLIDE model, we also provide code for training on MS-COCO dataset. \
+Firstly, specify the image root directory path and corresponding json file for captions
+in [image_dataset](https://github.com/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/composable_diffusion/image_datasets.py) file.\
+Then, we can use following command example to train a model on MS-COCO captions:
+```
+MODEL_FLAGS="--image_size 128 --num_channels 192 --num_res_blocks 2 --learn_sigma True --use_scale_shift_norm False"
+DIFFUSION_FLAGS="--diffusion_steps 1000 --noise_schedule squaredcos_cap_v2 --rescale_learned_sigmas False --rescale_timesteps False"
+TRAIN_FLAGS="--lr 1e-5 --batch_size 16 --use_kl False --schedule_sampler loss-second-moment --microbatch -1"
+python scripts/image_train.py --data_dir ./dataset/ --dataset coco $MODEL_FLAGS $DIFFUSION_FLAGS $TRAIN_FLAGS
+```
+
 --------------------------------------------------------------------------------------------------------
 
 ## Inference
@@ -95,4 +108,17 @@ For python inference scripts to run on your own GPUs.
     ```
     python scripts/image_sample_compose_glide.py
     ``` 
- 
+
+--------------------------------------------------------------------------------------------------------
+## Citing our Paper
+
+If you find our code useful for your research, please consider citing 
+
+``` 
+@inproceedings{liu2022compositional,
+  title={Compositional Visual Generation with Composable Diffusion Models},
+  author={Liu, Nan and Li, Shuang and Du, Yilun and Torralba, Antonio and Tenenbaum, Joshua B},
+  booktitle={European conference on computer vision},
+  year={2022}
+}
+```
