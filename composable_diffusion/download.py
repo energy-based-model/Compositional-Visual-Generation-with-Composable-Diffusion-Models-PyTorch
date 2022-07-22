@@ -14,6 +14,8 @@ MODEL_PATHS = {
     "upsample-inpaint": "https://openaipublic.blob.core.windows.net/diffusion/dec-2021/upsample_inpaint.pt",
     "clip/image-enc": "https://openaipublic.blob.core.windows.net/diffusion/dec-2021/clip_image_enc.pt",
     "clip/text-enc": "https://openaipublic.blob.core.windows.net/diffusion/dec-2021/clip_text_enc.pt",
+    "clevr_pos": "https://www.dropbox.com/s/fpy5xlsxk3xdh4g/ema_0.9999_740000.pt",
+    "clevr_rel": "https://www.dropbox.com/s/i929gm43u7n2hj5/ema_0.9999_740000.pt"
 }
 
 DATA_PATHS = {
