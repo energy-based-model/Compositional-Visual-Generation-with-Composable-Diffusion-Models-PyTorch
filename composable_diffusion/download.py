@@ -114,11 +114,11 @@ def download_model(
 ) -> str:
     if dataset not in MODEL_PATHS:
         raise ValueError(
-            f"Unknown dataset name {dataset}. Known names are: {DATA_PATHS.keys()}."
+            f"Unknown dataset name {dataset}. Known names are: {MODEL_PATHS.keys()}."
         )
     if cache_dir is None:
         cache_dir = './models'
-    url = DATA_PATHS[dataset]
+    url = MODEL_PATHS[dataset]
     os.makedirs(cache_dir, exist_ok=True)
     local_path = os.path.join(cache_dir, url.split("/")[-1])
     if os.path.exists(local_path.replace('?dl=0', '')):
