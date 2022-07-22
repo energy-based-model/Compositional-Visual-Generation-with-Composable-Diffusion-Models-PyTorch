@@ -31,6 +31,7 @@ This is the official codebase for **Compositional Visual Generation with Composa
 --------------------------------------------------------------------------------------------------------
 [colab]: <https://colab.research.google.com/assets/colab-badge.svg>
 [composable-glide]: <https://colab.research.google.com/github/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/notebooks/compose_glide.ipynb>
+[composable-clevr-pos]: <https://colab.research.google.com/github/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/notebooks/compose_clevr_pos.ipynb>
 
 
 ## Setup
@@ -102,12 +103,12 @@ python scripts/image_sample_compose_clevr_rel.py $MODEL_FLAGS $DIFFUSION_FLAGS -
 
 For detailed usage examples, see the [notebooks](notebooks) directory.
  * The [composable_glide](notebooks/compose_glide.ipynb) [![][colab]][composable-glide] notebook shows how to compose GLIDE for image generation.
+ * The [composable_clevr_pos](notebooks/compose_clevr_pos.ipynb) [![][colab]][composable-glide] notebook shows how to compose CLEVR Objects at given 2D coordinates for image generation.
 
 
 For python inference scripts to run on your own GPUs.
-    ```
-    python scripts/image_sample_compose_glide.py
-    ``` 
+* ```python scripts/image_sample_compose_glide.py```
+* ```python scripts/image_sample_compose_clevr_pos.py``` 
 
 --------------------------------------------------------------------------------------------------------
 
