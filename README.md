@@ -47,6 +47,34 @@ To install this package, clone this repository and then run:
 pip install -e .
 ```
 --------------------------------------------------------------------------------------------------------
+## Inference
+
+To sample from the model, we run the inference script for **CLEVR Objects**:
+```
+MODEL_FLAGS="--image_size 128 --num_channels 192 --num_res_blocks 2 --learn_sigma False --use_scale_shift_norm False --num_classes 2 --dataset clevr_pos --raw_unet True"
+DIFFUSION_FLAGS="--diffusion_steps 1000 --noise_schedule squaredcos_cap_v2 --rescale_learned_sigmas False --rescale_timesteps False"
+python scripts/image_sample_compose_clevr_pos.py $MODEL_FLAGS $DIFFUSION_FLAGS --ckpt_path $YOUR_CHECKPOINT_PATH
+```
+
+Similarly, run following command to sample from Model trained on **CLEVR Relations**:
+```
+MODEL_FLAGS="--image_size 128 --num_channels 192 --num_res_blocks 2 --learn_sigma True --use_scale_shift_norm False --num_classes 4,3,9,3,3,7 --raw_unet True"
+DIFFUSION_FLAGS="--diffusion_steps 1000 --noise_schedule squaredcos_cap_v2 --rescale_learned_sigmas False --rescale_timesteps False"
+python scripts/image_sample_compose_clevr_rel.py $MODEL_FLAGS $DIFFUSION_FLAGS --ckpt_path $YOUR_CHECKPOINT_PATH
+```
+
+--------------------------------------------------------------------------------------------------------
+
+For detailed usage examples, see the [notebooks](notebooks) directory.
+ * The [composable_glide](notebooks/compose_glide.ipynb) [![][colab]][composable-glide] notebook shows how to compose GLIDE for image generation.
+ * The [composable_clevr_pos](notebooks/compose_clevr_pos.ipynb) [![][colab]][composable-clevr-pos] notebook shows how to compose CLEVR Objects at given 2D coordinates for image generation.
+
+
+For python inference scripts to run on your own GPUs.
+* ```python scripts/image_sample_compose_glide.py```
+* ```python scripts/image_sample_compose_clevr_pos.py``` 
+
+--------------------------------------------------------------------------------------------------------
 
 ## Training
 * We follow the same manner as  [Improved-Diffusion](https://github.com/openai/improved-diffusion) for training.
@@ -80,35 +108,6 @@ DIFFUSION_FLAGS="--diffusion_steps 1000 --noise_schedule squaredcos_cap_v2 --res
 TRAIN_FLAGS="--lr 1e-5 --batch_size 16 --use_kl False --schedule_sampler loss-second-moment --microbatch -1"
 python scripts/image_train.py --data_dir ./dataset/ --dataset coco $MODEL_FLAGS $DIFFUSION_FLAGS $TRAIN_FLAGS
 ```
-
---------------------------------------------------------------------------------------------------------
-
-## Inference
-
-To sample from the model, we run the inference script for **CLEVR Objects**:
-```
-MODEL_FLAGS="--image_size 128 --num_channels 192 --num_res_blocks 2 --learn_sigma False --use_scale_shift_norm False --num_classes 2 --dataset clevr_pos --raw_unet True"
-DIFFUSION_FLAGS="--diffusion_steps 1000 --noise_schedule squaredcos_cap_v2 --rescale_learned_sigmas False --rescale_timesteps False"
-python scripts/image_sample_compose_clevr_pos.py $MODEL_FLAGS $DIFFUSION_FLAGS --ckpt_path $YOUR_CHECKPOINT_PATH
-```
-
-Similarly, run following command to sample from Model trained on **CLEVR Relations**:
-```
-MODEL_FLAGS="--image_size 128 --num_channels 192 --num_res_blocks 2 --learn_sigma True --use_scale_shift_norm False --num_classes 4,3,9,3,3,7 --raw_unet True"
-DIFFUSION_FLAGS="--diffusion_steps 1000 --noise_schedule squaredcos_cap_v2 --rescale_learned_sigmas False --rescale_timesteps False"
-python scripts/image_sample_compose_clevr_rel.py $MODEL_FLAGS $DIFFUSION_FLAGS --ckpt_path $YOUR_CHECKPOINT_PATH
-```
-
---------------------------------------------------------------------------------------------------------
-
-For detailed usage examples, see the [notebooks](notebooks) directory.
- * The [composable_glide](notebooks/compose_glide.ipynb) [![][colab]][composable-glide] notebook shows how to compose GLIDE for image generation.
- * The [composable_clevr_pos](notebooks/compose_clevr_pos.ipynb) [![][colab]][composable-glide] notebook shows how to compose CLEVR Objects at given 2D coordinates for image generation.
-
-
-For python inference scripts to run on your own GPUs.
-* ```python scripts/image_sample_compose_glide.py```
-* ```python scripts/image_sample_compose_clevr_pos.py``` 
 
 --------------------------------------------------------------------------------------------------------
 
