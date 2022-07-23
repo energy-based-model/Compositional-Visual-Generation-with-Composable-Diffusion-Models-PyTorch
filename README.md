@@ -1,7 +1,7 @@
 # Composable Diffusion
 
 ### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf) | [Demo](https://huggingface.co/spaces/Shuang59/Composable-Diffusion)
-[![][colab]][composable-glide]
+[![][colab]][composable-demo]
 
 
 
@@ -30,9 +30,7 @@ This is the official codebase for **Compositional Visual Generation with Composa
 
 --------------------------------------------------------------------------------------------------------
 [colab]: <https://colab.research.google.com/assets/colab-badge.svg>
-[composable-glide]: <https://colab.research.google.com/github/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/notebooks/compose_glide.ipynb>
-[composable-clevr-pos]: <https://colab.research.google.com/github/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/notebooks/compose_clevr_pos.ipynb>
-
+[composable-demo]: <https://colab.research.google.com/github/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/notebooks/demo.ipynb>
 
 ## Setup
 
@@ -66,8 +64,7 @@ python scripts/image_sample_compose_clevr_rel.py $MODEL_FLAGS $DIFFUSION_FLAGS -
 --------------------------------------------------------------------------------------------------------
 
 For detailed usage examples, see the [notebooks](notebooks) directory.
- * The [composable_glide](notebooks/compose_glide.ipynb) [![][colab]][composable-glide] notebook shows how to compose GLIDE for image generation.
- * The [composable_clevr_pos](notebooks/compose_clevr_pos.ipynb) [![][colab]][composable-clevr-pos] notebook shows how to compose CLEVR Objects at given 2D coordinates for image generation.
+ * The [demo](notebooks/demo.ipynb) [![][colab]][composable-demo] notebook shows how to compose GLIDE, and CLEVR Objects for image generation.
 
 
 For python inference scripts to run on your own GPUs.
