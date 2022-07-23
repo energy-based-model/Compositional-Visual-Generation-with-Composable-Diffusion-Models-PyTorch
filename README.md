@@ -48,7 +48,7 @@ pip install -e .
 ## Inference
 
 ### CoLab 
-The [demo](notebooks/demo.ipynb) [![][colab]][composable-demo] notebook shows how to compose GLIDE, and CLEVR Objects for image generation.
+The [demo](notebooks/demo.ipynb) [![][colab]][composable-demo] notebook shows how to compose natural language descriptions, and CLEVR objects for image generation.
 
 ### Python
 Compose natural language descriptions:
