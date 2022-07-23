@@ -57,7 +57,6 @@ python scripts/image_sample_compose_glide.py
 ```
 
 Compose objects:
-To sample from the model, we run the inference script for **CLEVR Objects**:
 ```
 MODEL_FLAGS="--image_size 128 --num_channels 192 --num_res_blocks 2 --learn_sigma False --use_scale_shift_norm False --num_classes 2 --dataset clevr_pos --raw_unet True"
 DIFFUSION_FLAGS="--diffusion_steps 1000 --noise_schedule squaredcos_cap_v2 --rescale_learned_sigmas False --rescale_timesteps False"
