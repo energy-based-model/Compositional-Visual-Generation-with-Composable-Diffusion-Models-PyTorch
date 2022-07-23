@@ -47,6 +47,16 @@ pip install -e .
 --------------------------------------------------------------------------------------------------------
 ## Inference
 
+### CoLab 
+The [demo](notebooks/demo.ipynb) [![][colab]][composable-demo] notebook shows how to compose GLIDE, and CLEVR Objects for image generation.
+
+### Python
+Compose natural language descriptions:
+```
+python scripts/image_sample_compose_glide.py
+```
+
+Compose objects:
 To sample from the model, we run the inference script for **CLEVR Objects**:
 ```
 MODEL_FLAGS="--image_size 128 --num_channels 192 --num_res_blocks 2 --learn_sigma False --use_scale_shift_norm False --num_classes 2 --dataset clevr_pos --raw_unet True"
@@ -54,22 +64,12 @@ DIFFUSION_FLAGS="--diffusion_steps 1000 --noise_schedule squaredcos_cap_v2 --res
 python scripts/image_sample_compose_clevr_pos.py $MODEL_FLAGS $DIFFUSION_FLAGS --ckpt_path $YOUR_CHECKPOINT_PATH
 ```
 
-Similarly, run following command to sample from Model trained on **CLEVR Relations**:
+Compose objects relational descriptions:
 ```
 MODEL_FLAGS="--image_size 128 --num_channels 192 --num_res_blocks 2 --learn_sigma True --use_scale_shift_norm False --num_classes 4,3,9,3,3,7 --raw_unet True"
 DIFFUSION_FLAGS="--diffusion_steps 1000 --noise_schedule squaredcos_cap_v2 --rescale_learned_sigmas False --rescale_timesteps False"
 python scripts/image_sample_compose_clevr_rel.py $MODEL_FLAGS $DIFFUSION_FLAGS --ckpt_path $YOUR_CHECKPOINT_PATH
 ```
-
---------------------------------------------------------------------------------------------------------
-
-For detailed usage examples, see the [notebooks](notebooks) directory.
- * The [demo](notebooks/demo.ipynb) [![][colab]][composable-demo] notebook shows how to compose GLIDE, and CLEVR Objects for image generation.
-
-
-For python inference scripts to run on your own GPUs.
-* ```python scripts/image_sample_compose_glide.py```
-* ```python scripts/image_sample_compose_clevr_pos.py``` 
 
 --------------------------------------------------------------------------------------------------------
 
