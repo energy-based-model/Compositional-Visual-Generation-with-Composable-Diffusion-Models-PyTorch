@@ -1,7 +1,7 @@
 # Composable Diffusion
 
-### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf) | [Demo](https://huggingface.co/spaces/Shuang59/Composable-Diffusion)
-[![][colab]][composable-demo]
+### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf) | [Google Colab][composable-demo] | [Huggingface][huggingface-demo]
+[![][colab]][composable-demo] [![][huggingface]][huggingface-demo]
 
 
 
@@ -21,16 +21,21 @@ This is the official codebase for **Compositional Visual Generation with Composa
     <br>
     [ECCV 2022](https://arxiv.org/pdf/2206.01714.pdf)
 
+[colab]: <https://colab.research.google.com/assets/colab-badge.svg>
+[huggingface]: <https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue>
+[composable-demo]: <https://colab.research.google.com/github/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/notebooks/demo.ipynb>
+[huggingface-demo]: <https://huggingface.co/spaces/Shuang59/Composable-Diffusion>
 
+## **News**
 
+--------------------------------------------------------------------------------------------------------
+* Now you can try to use compose **[Stable-Diffusion](https://github.com/CompVis/stable-diffusion)** Model using our [![][huggingface]][huggingface-demo] or [![][colab]][composable-demo] to sample 512x512 images.
 --------------------------------------------------------------------------------------------------------
 * The codebase is built upon [GLIDE](https://github.com/openai/glide-text2im) and [Improved-Diffusion](https://github.com/openai/improved-diffusion).
 * This codebase provides both training and inference code.
 * **The codebase can be used to train text-conditioned diffusion model in a similar manner as [GLIDE](https://github.com/openai/glide-text2im).**
 
 --------------------------------------------------------------------------------------------------------
-[colab]: <https://colab.research.google.com/assets/colab-badge.svg>
-[composable-demo]: <https://colab.research.google.com/github/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/notebooks/demo.ipynb>
 
 ## Setup
 
@@ -47,7 +52,7 @@ pip install -e .
 --------------------------------------------------------------------------------------------------------
 ## Inference
 
-### CoLab 
+### Google Colab 
 The [demo](notebooks/demo.ipynb) [![][colab]][composable-demo] notebook shows how to compose natural language descriptions, and CLEVR objects for image generation.
 
 ### Python
