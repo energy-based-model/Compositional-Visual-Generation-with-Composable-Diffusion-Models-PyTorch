@@ -10,8 +10,8 @@ from composable_diffusion.model_creation import (
 )
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--timestep_respacing', type=int, default=100)
-parser.add_argument('--guidance_scale', type=float, default=10)
+parser.add_argument('--steps', type=int, default=100)
+parser.add_argument('--scale', type=float, default=10)
 parser.add_argument('--upsample_temp', type=float, default=0.98)
 parser.add_argument('--prompt', type=str, default='a camel | a forest', help="using `|` to compose multiple sentences")
 args = parser.parse_args()
@@ -22,7 +22,7 @@ device = th.device('cpu' if not has_cuda else 'cuda')
 # Create base model.
 options = model_and_diffusion_defaults()
 options['use_fp16'] = has_cuda
-options['timestep_respacing'] = str(args.timestep_respacing)
+options['timestep_respacing'] = str(args.steps)
 model, diffusion = create_model_and_diffusion(**options)
 model.eval()
 if has_cuda:
@@ -54,7 +54,7 @@ def show_images(batch: th.Tensor, file_name):
 prompt = args.prompt
 prompts = [x.strip() for x in prompt.split('|')]
 batch_size = 1
-guidance_scale = args.guidance_scale
+guidance_scale = args.scale
 # Tune this parameter to control the sharpness of 256x256 images.
 # A value of 1.0 is sharper, but sometimes results in grainy artifacts.
 upsample_temp = args.upsample_temp

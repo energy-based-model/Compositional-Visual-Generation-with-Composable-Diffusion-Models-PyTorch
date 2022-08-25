@@ -56,9 +56,15 @@ pip install -e .
 The [demo](notebooks/demo.ipynb) [![][colab]][composable-demo] notebook shows how to compose natural language descriptions, and CLEVR objects for image generation.
 
 ### Python
-Compose natural language descriptions:
+Compose natural language descriptions using [Stable-Diffusion](https://github.com/CompVis/stable-diffusion):
 ```
-python scripts/image_sample_compose_glide.py
+pip install -r requirements.txt # download modified diffuser library and transformers
+python scripts/image_sample_compose_glide.py --prompt a camel | a forest --scale 10 --steps 50
+```
+
+Compose natural language descriptions using pretrained [GLIDE](https://github.com/openai/glide-text2im):
+```
+python scripts/image_sample_compose_stable_diffusion.py --prompt a camel | a forest --scale 10 --steps 50
 ```
 
 Compose objects:
