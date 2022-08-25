@@ -64,7 +64,7 @@ python scripts/image_sample_compose_glide.py --prompt a camel | a forest --scale
 
 Compose natural language descriptions using pretrained [GLIDE](https://github.com/openai/glide-text2im):
 ```
-python scripts/image_sample_compose_stable_diffusion.py --prompt a camel | a forest --scale 10 --steps 50
+python scripts/image_sample_compose_stable_diffusion.py --prompt a camel | a forest --scale 10 --steps 100
 ```
 
 Compose objects:
