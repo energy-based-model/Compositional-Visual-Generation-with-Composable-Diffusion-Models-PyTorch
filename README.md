@@ -3,7 +3,8 @@
 ### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf) | [Google Colab][composable-demo] | [Huggingface][huggingface-demo]
 [![][colab]][composable-demo] [![][huggingface]][huggingface-demo]
 ![image](images/img.png)
-*Prompt: "A cloudy blue sky AND A mountain in the horizon AND Cherry Blossoms in front of the mountain."*
+**Prompt:** *"A cloudy blue sky AND A mountain in the horizon AND Cherry Blossoms in front of the mountain."*
+(Powered by [Stable-Diffusion](https://github.com/CompVis/stable-diffusion) using our compositional generation operator.)
 
 
 This is the official codebase for **Compositional Visual Generation with Composable Diffusion Models**.
