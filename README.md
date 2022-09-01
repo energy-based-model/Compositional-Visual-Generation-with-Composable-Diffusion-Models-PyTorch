@@ -60,7 +60,6 @@ The [demo](notebooks/demo.ipynb) [![][colab]][composable-demo] notebook shows ho
 ### Python
 Compose natural language descriptions using [Stable-Diffusion](https://github.com/CompVis/stable-diffusion):
 ```
-pip install -r requirements.txt # download our modified diffuser library and transformers
 python scripts/image_sample_compose_stable_diffusion.py --prompt "a camel | a forest" --scale 10 --steps 50
 ```
 
