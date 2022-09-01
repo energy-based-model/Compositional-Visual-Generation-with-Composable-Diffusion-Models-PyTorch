@@ -4,7 +4,7 @@ import torchvision.utils as tvu
 
 from torch import autocast
 from PIL import Image
-from diffusers import StableDiffusionPipeline
+from composable_stable_diffusion.pipeline_stable_diffusion import ComposableStableDiffusionPipeline
 
 import argparse
 
@@ -23,9 +23,9 @@ prompt = args.prompt
 scale = args.scale
 steps = args.steps
 
-pipe = StableDiffusionPipeline.from_pretrained(
+pipe = ComposableStableDiffusionPipeline.from_pretrained(
     "CompVis/stable-diffusion-v1-4",
-    use_auth_token=True,
+    use_auth_token=True
 ).to(device)
 
 with autocast('cpu' if not has_cuda else 'cuda'):
