@@ -9,10 +9,10 @@ from diffusers import StableDiffusionPipeline
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--prompt", default="a forest | a camel",
+parser.add_argument("--prompt", type=str, default="a forest | a camel",
                     help="use '|' as the delimiter to compose separate sentences.")
-parser.add_argument("--steps", default=50)
-parser.add_argument("--scale", default=10)
+parser.add_argument("--steps", type=int, default=50)
+parser.add_argument("--scale", type=float, default=10)
 args = parser.parse_args()
 
 
