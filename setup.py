@@ -28,7 +28,8 @@ setup(
         "numpy",
         "blobfile",
         "torchvision",
-        "diffuser"
+        "diffuser",
+        "transformers"
     ],
     author="nanliu",
 )
