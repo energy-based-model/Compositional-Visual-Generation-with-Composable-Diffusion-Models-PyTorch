@@ -4,7 +4,7 @@ import torchvision.utils as tvu
 
 from torch import autocast
 from PIL import Image
-from composable_stable_diffusion.pipeline_stable_diffusion import ComposableStableDiffusionPipeline
+from composable_stable_diffusion.pipeline_composable_stable_diffusion import ComposableStableDiffusionPipeline
 
 import argparse
 
