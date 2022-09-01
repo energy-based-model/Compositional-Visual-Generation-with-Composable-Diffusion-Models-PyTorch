@@ -60,13 +60,13 @@ The [demo](notebooks/demo.ipynb) [![][colab]][composable-demo] notebook shows ho
 ### Python
 Compose natural language descriptions using [Stable-Diffusion](https://github.com/CompVis/stable-diffusion):
 ```
-pip install -r requirements.txt # download modified diffuser library and transformers
-python scripts/image_sample_compose_glide.py --prompt a camel | a forest --scale 10 --steps 50
+pip install -r requirements.txt # download our modified diffuser library and transformers
+python scripts/image_sample_compose_stable_diffusion.py --prompt "a camel | a forest" --scale 10 --steps 50
 ```
 
 Compose natural language descriptions using pretrained [GLIDE](https://github.com/openai/glide-text2im):
 ```
-python scripts/image_sample_compose_stable_diffusion.py --prompt a camel | a forest --scale 10 --steps 100
+python scripts/image_sample_compose_glide.py --prompt "a camel | a forest" --scale 10 --steps 100
 ```
 
 Compose objects:
