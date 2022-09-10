@@ -1,7 +1,7 @@
 import torch as th
 
 from torch import autocast
-from composable_diffusion.pipeline_composable_stable_diffusion import ComposableStableDiffusionPipeline
+from composable_diffusion.composable_stable_diffusion.pipeline_composable_stable_diffusion import ComposableStableDiffusionPipeline
 
 import argparse
 
@@ -22,7 +22,7 @@ steps = args.steps
 
 pipe = ComposableStableDiffusionPipeline.from_pretrained(
     "CompVis/stable-diffusion-v1-4",
-    use_auth_token=True
+    use_auth_token='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'
 ).to(device)
 
 with autocast('cpu' if not has_cuda else 'cuda'):

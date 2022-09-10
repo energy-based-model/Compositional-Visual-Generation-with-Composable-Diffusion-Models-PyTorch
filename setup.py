@@ -6,6 +6,7 @@ setup(
         "composable_diffusion",
         "composable_diffusion.clip",
         "composable_diffusion.tokenizer",
+        "composable_diffusion.composable_stable_diffusion",
     ],
     package_data={
         "composable_diffusion.tokenizer": [
@@ -31,4 +32,5 @@ setup(
         "transformers"
     ],
     author="nanliu",
+    version='1.0',
 )
