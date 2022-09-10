@@ -22,7 +22,7 @@ steps = args.steps
 
 pipe = ComposableStableDiffusionPipeline.from_pretrained(
     "CompVis/stable-diffusion-v1-4",
-    use_auth_token='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'
+    use_auth_token=True
 ).to(device)
 
 with autocast('cpu' if not has_cuda else 'cuda'):
