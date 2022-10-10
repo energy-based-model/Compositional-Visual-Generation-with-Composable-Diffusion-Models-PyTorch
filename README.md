@@ -1,5 +1,5 @@
 # Composable Diffusion 
-## We propose to use conjunction and negation operator for compositional generation for all conditioned diffusion models!
+## We propose to use conjunction and negation operator for compositional generation for conditioned diffusion models.
 
 ### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf) | [Google Colab][composable-demo] | [Huggingface][huggingface-demo]
 [![][colab]][composable-demo] [![][huggingface]][huggingface-demo]
@@ -31,7 +31,7 @@ This is the official codebase for **Compositional Visual Generation with Composa
     <br>
     <sup>1</sup>UIUC, <sup>2</sup>MIT CSAIL
     <br>
-    [ECCV 2022](https://arxiv.org/pdf/2206.01714.pdf)
+    [ECCV 2022](https://arxiv.org/pdf/2206.01714.pdf) / [MIT News](https://news.mit.edu/2022/ai-system-makes-models-like-dall-e-2-more-creative-0908) / [MIT CSAIL News](https://www.csail.mit.edu/news/ai-system-makes-models-dall-e-2-more-creative)
 
 [colab]: <https://colab.research.google.com/assets/colab-badge.svg>
 [huggingface]: <https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue>
@@ -41,6 +41,8 @@ This is the official codebase for **Compositional Visual Generation with Composa
 ## **News**
 
 --------------------------------------------------------------------------------------------------------
+* <b>10/10/22</b>: Our proposed operators have been added into [stable-diffusion-webui-negation](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Negative-prompt) and [stable-diffusion-webui-conjunction](https://github.com/AUTOMATIC1111/stable-diffusion-webui/commit/757bb7c46b20651853ee23e3109ac4f9fb06a061)!
+* <b>09/08/22</b>: Our paper is on [MIT News](https://news.mit.edu/2022/ai-system-makes-models-like-dall-e-2-more-creative-0908) and [MIT CSAIL News](https://www.csail.mit.edu/news/ai-system-makes-models-dall-e-2-more-creative)!
 * Now you can try to use compose **[Stable-Diffusion](https://github.com/CompVis/stable-diffusion)** Model using our [![][huggingface]][huggingface-demo] or [![][colab]][composable-demo] to sample 512x512 images.
 --------------------------------------------------------------------------------------------------------
 * The codebase is built upon [GLIDE](https://github.com/openai/glide-text2im) and [Improved-Diffusion](https://github.com/openai/improved-diffusion).
