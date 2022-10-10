@@ -304,7 +304,7 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
 
             # perform guidance
             if do_classifier_free_guidance:
-                noise_pred_uncond = noise_preds[~mask] * neg_weights
+                noise_pred_uncond = (noise_preds[~mask] * neg_weights).sum(dim=0, keepdims=True)
                 noise_pred_text = (noise_preds[mask] * pos_weights).sum(dim=0, keepdims=True)
                 noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_text - noise_pred_uncond)
 
