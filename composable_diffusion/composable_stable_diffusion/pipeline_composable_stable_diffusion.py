@@ -107,6 +107,7 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
         latents: Optional[torch.FloatTensor] = None,
         output_type: Optional[str] = "pil",
         return_dict: bool = True,
+        weights: Optional[torch.FloatTensor] = None,
         **kwargs,
     ):
         r"""
@@ -189,6 +190,32 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
         )
         text_embeddings = self.text_encoder(text_input.input_ids.to(self.device))[0]
 
+        if weights is None:
+            # specify weights for prompts (excluding the unconditional score)
+            print('using equal weights for all prompts...')
+            pos_weights = torch.tensor([1 / (text_embeddings.shape[0] - 1)] * (text_embeddings.shape[0] - 1),
+                                       device=self.device).reshape(-1, 1, 1, 1)
+            neg_weights = torch.tensor([1.], device=self.device).reshape(-1, 1, 1, 1)
+            mask = torch.tensor([False] + [True] * pos_weights.shape[0], dtype=torch.bool)
+        else:
+            assert len(weights) == text_embeddings.shape[0], "weights specified are not equal to the number of prompts"
+            pos_weights = []
+            neg_weights = []
+            mask = []  # first one is unconditional score
+            for w in weights:
+                if w > 0:
+                    pos_weights.append(w)
+                    mask.append(True)
+                else:
+                    neg_weights.append(abs(w))
+                    mask.append(False)
+            # normalize the weights
+            pos_weights = torch.tensor(pos_weights, device=self.device).reshape(-1, 1, 1, 1)
+            pos_weights = pos_weights / pos_weights.sum()
+            neg_weights = torch.tensor(neg_weights, device=self.device).reshape(-1, 1, 1, 1)
+            neg_weights = neg_weights / neg_weights.sum()
+            mask = torch.tensor(mask, device=self.device, dtype=torch.bool)
+
         # here `guidance_scale` is defined analog to the guidance weight `w` of equation (2)
         # of the Imagen paper: https://arxiv.org/pdf/2205.11487.pdf . `guidance_scale = 1`
         # corresponds to doing no classifier free guidance.
@@ -196,15 +223,22 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
         # get unconditional embeddings for classifier free guidance
         if do_classifier_free_guidance:
             max_length = text_input.input_ids.shape[-1]
-            uncond_input = self.tokenizer(
-                [""] * batch_size, padding="max_length", max_length=max_length, return_tensors="pt"
-            )
-            uncond_embeddings = self.text_encoder(uncond_input.input_ids.to(self.device))[0]
 
-            # For classifier free guidance, we need to do two forward passes.
-            # Here we concatenate the unconditional and text embeddings into a single batch
-            # to avoid doing two forward passes
-            text_embeddings = torch.cat([uncond_embeddings, text_embeddings])
+            if torch.all(mask):
+                # no negative prompts, so we use empty string as the negative prompt
+                uncond_input = self.tokenizer(
+                    [""] * batch_size, padding="max_length", max_length=max_length, return_tensors="pt"
+                )
+                uncond_embeddings = self.text_encoder(uncond_input.input_ids.to(self.device))[0]
+
+                # For classifier free guidance, we need to do two forward passes.
+                # Here we concatenate the unconditional and text embeddings into a single batch
+                # to avoid doing two forward passes
+                text_embeddings = torch.cat([uncond_embeddings, text_embeddings])
+
+                # update negative weights
+                neg_weights = torch.tensor([1.], device=self.device)
+                mask = torch.tensor([False] + mask.detach().tolist(), device=self.device, dtype=torch.bool)
 
         # get the initial random noise unless the user supplied it
 
@@ -253,13 +287,19 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
                 # the model input needs to be scaled to match the continuous ODE formulation in K-LMS
                 latent_model_input = latent_model_input / ((sigma**2 + 1) ** 0.5)
 
+            # reduce memory by predicting each score sequentially
+            noise_preds = []
             # predict the noise residual
-            noise_pred = self.unet(latent_model_input, t, encoder_hidden_states=text_embeddings).sample
+            for latent_in, text_embedding_in in zip(
+                    torch.chunk(latent_model_input, chunks=latent_model_input.shape[0], dim=0),
+                    torch.chunk(text_embeddings, chunks=text_embeddings.shape[0], dim=0)):
+                noise_preds.append(self.unet(latent_in, t, encoder_hidden_states=text_embedding_in).sample)
+            noise_preds = torch.cat(noise_preds, dim=0)
 
             # perform guidance
             if do_classifier_free_guidance:
-                pred_decomp = noise_pred.chunk(text_embeddings.shape[0])
-                noise_pred_uncond, noise_pred_text = pred_decomp[0], torch.cat(pred_decomp[1:], dim=0).mean(dim=0, keepdim=True)
+                noise_pred_uncond = noise_preds[~mask] * neg_weights
+                noise_pred_text = (noise_preds[mask] * pos_weights).sum(dim=0, keepdims=True)
                 noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_text - noise_pred_uncond)
 
             # compute the previous noisy sample x_t -> x_t-1
