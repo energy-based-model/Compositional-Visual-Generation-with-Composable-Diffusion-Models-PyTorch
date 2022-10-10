@@ -107,7 +107,7 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
         latents: Optional[torch.FloatTensor] = None,
         output_type: Optional[str] = "pil",
         return_dict: bool = True,
-        weights: Optional[torch.FloatTensor] = None,
+        weights: Optional[str] = "",
         **kwargs,
     ):
         r"""
@@ -190,7 +190,7 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
         )
         text_embeddings = self.text_encoder(text_input.input_ids.to(self.device))[0]
 
-        if weights is None:
+        if not weights:
             # specify weights for prompts (excluding the unconditional score)
             print('using equal weights for all prompts...')
             pos_weights = torch.tensor([1 / (text_embeddings.shape[0] - 1)] * (text_embeddings.shape[0] - 1),
@@ -198,6 +198,12 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
             neg_weights = torch.tensor([1.], device=self.device).reshape(-1, 1, 1, 1)
             mask = torch.tensor([False] + [True] * pos_weights.shape[0], dtype=torch.bool)
         else:
+            # set prompt weight for each
+            num_prompts = len(prompt) if isinstance(prompt, list) else 1
+            weights = [float(w.strip()) for w in weights.split("|")]
+            if len(weights) < num_prompts:
+                weights.append(1.)
+            weights = torch.tensor(weights, device=self.device)
             assert len(weights) == text_embeddings.shape[0], "weights specified are not equal to the number of prompts"
             pos_weights = []
             neg_weights = []
