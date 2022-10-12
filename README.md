@@ -7,7 +7,7 @@
 ![](images/example1_AND.gif)  |  ![](images/example1_NOT.gif)
 :-------------------------:|:-------------------------:
 
-| Image | Positive Prompts | Negative Prompts |
+| Image | Positive Prompts (AND Operator) | Negative Prompts (NOT Operator) |
 | --------------- | --------------- | --------------- |
 | ```Left``` | ```["A stone castle surrounded by lakes and trees, fantasy, wallpaper, concept art, extremely detailed", "Black and white"]``` | ```None``` |
 | ```Right``` | ```["A stone castle surrounded by lakes and trees, fantasy, wallpaper, concept art, extremely detailed"]``` | ```["Black and white"]``` |
@@ -16,7 +16,7 @@
 ![](images/example2_NOT.gif)  |  ![](images/example2_AND.gif)
 :-------------------------:|:-------------------------:
 
-| Image | Positive Prompts | Negative Prompts |
+| Image | Positive Prompts (AND Operator) | Negative Prompts (NOT Operator) |
 | --------------- | --------------- | --------------- |
 | ```Left``` | ```["mystical trees", "A dark magical pond", "Dark"]``` | ```None``` |
 | ```Right``` | ```["mystical trees", "A dark magical pond"]``` | ```["Dark"]``` |
