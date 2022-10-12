@@ -4,7 +4,7 @@
 ### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf) | [Google Colab][composable-demo] | [Huggingface][huggingface-demo]
 [![][colab]][composable-demo] [![][huggingface]][huggingface-demo]
 
-![](images/example1_AND.gif)  |  ![](images/example1_NOT.gif)
+![](images/example1_A.gif)  |  ![](images/example1_N.gif)
 :-------------------------:|:-------------------------:
 
 | Image | Positive Prompts (AND Operator) | Negative Prompts (NOT Operator) |
@@ -13,7 +13,7 @@
 | ```Right``` | ```["A stone castle surrounded by lakes and trees, fantasy, wallpaper, concept art, extremely detailed"]``` | ```["Black and white"]``` |
 
 
-![](images/example2_AND.gif)  |  ![](images/example2_NOT.gif)
+![](images/example2_A.gif)  |  ![](images/example2_N.gif)
 :-------------------------:|:-------------------------:
 
 | Image | Positive Prompts (AND Operator) | Negative Prompts (NOT Operator) |
