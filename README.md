@@ -1,5 +1,5 @@
 # Composable Diffusion 
-## We propose to use conjunction and negation (a.k.a. negative prompts) operator for compositional generation for conditioned diffusion models.
+## We propose to use conjunction and negation (negative prompts) operator for compositional generation for conditional diffusion models.
 
 ### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf) | [Google Colab][composable-demo] | [Huggingface][huggingface-demo]
 [![][colab]][composable-demo] [![][huggingface]][huggingface-demo]
