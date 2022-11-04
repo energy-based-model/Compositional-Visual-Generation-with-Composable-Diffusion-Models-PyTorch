@@ -203,6 +203,8 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
             weights = [float(w.strip()) for w in weights.split("|")]
             if len(weights) < num_prompts:
                 weights.append(1.)
+            else:
+                weights = weights[:num_prompts]
             weights = torch.tensor(weights, device=self.device)
             assert len(weights) == text_embeddings.shape[0], "weights specified are not equal to the number of prompts"
             pos_weights = []
@@ -230,21 +232,15 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
         if do_classifier_free_guidance:
             max_length = text_input.input_ids.shape[-1]
 
-            if torch.all(mask):
-                # no negative prompts, so we use empty string as the negative prompt
-                uncond_input = self.tokenizer(
-                    [""] * batch_size, padding="max_length", max_length=max_length, return_tensors="pt"
-                )
-                uncond_embeddings = self.text_encoder(uncond_input.input_ids.to(self.device))[0]
+            uncond_input = self.tokenizer(
+                [""] * batch_size, padding="max_length", max_length=max_length, return_tensors="pt"
+            )
+            uncond_embeddings = self.text_encoder(uncond_input.input_ids.to(self.device))[0]
 
-                # For classifier free guidance, we need to do two forward passes.
-                # Here we concatenate the unconditional and text embeddings into a single batch
-                # to avoid doing two forward passes
-                text_embeddings = torch.cat([uncond_embeddings, text_embeddings])
-
-                # update negative weights
-                neg_weights = torch.tensor([1.], device=self.device)
-                mask = torch.tensor([False] + mask.detach().tolist(), device=self.device, dtype=torch.bool)
+            # For classifier free guidance, we need to do two forward passes.
+            # Here we concatenate the unconditional and text embeddings into a single batch
+            # to avoid doing two forward passes
+            text_embeddings = torch.cat([uncond_embeddings, text_embeddings])
 
         # get the initial random noise unless the user supplied it
 
@@ -304,9 +300,14 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
 
             # perform guidance
             if do_classifier_free_guidance:
-                noise_pred_uncond = (noise_preds[~mask] * neg_weights).sum(dim=0, keepdims=True)
-                noise_pred_text = (noise_preds[mask] * pos_weights).sum(dim=0, keepdims=True)
-                noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_text - noise_pred_uncond)
+                noise_pred_uncond, noise_pred_cond = noise_preds[:1], noise_preds[1:]
+                noise_pred_pos = (noise_pred_cond[mask] * pos_weights).sum(dim=0, keepdims=True)
+                # AND only (no negated concepts)
+                if torch.all(mask):
+                    noise_pred_neg = noise_pred_uncond
+                else:
+                    noise_pred_neg = (noise_pred_cond[~mask] * neg_weights).sum(dim=0, keepdims=True)
+                noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_pos - noise_pred_neg)
 
             # compute the previous noisy sample x_t -> x_t-1
             if isinstance(self.scheduler, LMSDiscreteScheduler):
