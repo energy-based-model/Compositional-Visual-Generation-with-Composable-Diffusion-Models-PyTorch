@@ -192,11 +192,11 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
 
         if not weights:
             # specify weights for prompts (excluding the unconditional score)
-            print('using equal weights for all prompts...')
+            print('using equal positive weights (conjunction) for all prompts...')
             pos_weights = torch.tensor([1 / (text_embeddings.shape[0] - 1)] * (text_embeddings.shape[0] - 1),
                                        device=self.device).reshape(-1, 1, 1, 1)
             neg_weights = torch.tensor([1.], device=self.device).reshape(-1, 1, 1, 1)
-            mask = torch.tensor([False] + [True] * pos_weights.shape[0], dtype=torch.bool)
+            mask = torch.tensor([True] * pos_weights.shape[0], dtype=torch.bool)
         else:
             # set prompt weight for each
             num_prompts = len(prompt) if isinstance(prompt, list) else 1
