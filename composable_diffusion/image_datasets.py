@@ -192,7 +192,7 @@ class Clevr2DPosDataset(Dataset):
         return np.transpose(arr, [2, 0, 1]), out_dict
 
 
-class CocoDataset(data.Dataset):
+class CocoDataset(Dataset):
     """COCO Custom Dataset compatible with torch.utils.data.DataLoader."""
 
     def __init__(self, root, json, resolution, random_crop=False, random_flip=False):
