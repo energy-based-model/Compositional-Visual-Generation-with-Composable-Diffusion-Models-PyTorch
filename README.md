@@ -51,7 +51,7 @@ This is the official codebase for **Compositional Visual Generation with Composa
 ## **News**
 
 --------------------------------------------------------------------------------------------------------
-* <b>10/10/22</b>: Our proposed operators have been added into [stable-diffusion-webui-negation](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Negative-prompt) and [stable-diffusion-webui-conjunction](https://github.com/AUTOMATIC1111/stable-diffusion-webui/commit/c26732fbee2a57e621ac22bf70decf7496daa4cd)!
+* <b>10/10/22</b>: Our proposed operators have been added into [stable-diffusion-webui-conjunction](https://github.com/AUTOMATIC1111/stable-diffusion-webui/commit/c26732fbee2a57e621ac22bf70decf7496daa4cd)!
 * <b>09/08/22</b>: Our paper is on [MIT News](https://news.mit.edu/2022/ai-system-makes-models-like-dall-e-2-more-creative-0908) and [MIT CSAIL News](https://www.csail.mit.edu/news/ai-system-makes-models-dall-e-2-more-creative)!
 * Now you can try to use compose **[Stable-Diffusion](https://github.com/CompVis/stable-diffusion)** Model using our [![][huggingface]][huggingface-demo] or [![][colab]][composable-demo] to sample 512x512 images.
 --------------------------------------------------------------------------------------------------------
