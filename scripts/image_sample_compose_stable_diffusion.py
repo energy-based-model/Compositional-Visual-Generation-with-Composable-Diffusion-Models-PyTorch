@@ -12,8 +12,9 @@ parser.add_argument("--prompt", type=str, default="mystical trees | A magical po
                     help="use '|' as the delimiter to compose separate sentences.")
 parser.add_argument("--steps", type=int, default=50)
 parser.add_argument("--scale", type=float, default=7.5)
-parser.add_argument("--weights", type=str, default="1 | 1 | 1")
-parser.add_argument("--seed", type=int, default=0)
+parser.add_argument("--weights", type=str, default="7.5 | 7.5 | 7.5")
+parser.add_argument("--seed", type=int, default=8)
+parser.add_argument("--model_path", type=str, default="CompVis/stable-diffusion-v1-4")
 parser.add_argument("--num_images", type=int, default=1)
 args = parser.parse_args()
 
@@ -25,16 +26,10 @@ scale = args.scale
 steps = args.steps
 
 pipe = ComposableStableDiffusionPipeline.from_pretrained(
-    "CompVis/stable-diffusion-v1-4",
-    use_auth_token=True
+    args.model_path,
 ).to(device)
 
-
-def dummy(images, **kwargs):
-    return images, False
-
-
-pipe.safety_checker = dummy
+pipe.safety_checker = None
 
 images = []
 generator = th.Generator("cuda").manual_seed(args.seed)

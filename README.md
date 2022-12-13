@@ -83,11 +83,11 @@ The [demo](notebooks/demo.ipynb) [![][colab]][composable-demo] notebook shows ho
 Compose natural language descriptions using [Stable-Diffusion](https://github.com/CompVis/stable-diffusion):
 ```
 # Conjunction (AND) by specifying positive weights
-python scripts/image_sample_compose_stable_diffusion.py --prompt "mystical trees | A magical pond | dark" --weights "1 | 1 | 1" --scale 7.5 --steps 50 --seed 2
+python scripts/image_sample_compose_stable_diffusion.py --prompt "mystical trees | A magical pond | dark" --weights "7.5 | 7.5 | 7.5" --scale 7.5 --steps 50 --seed 2
 ```
 ```
 # NEGATION (NOT) by specifying negative weights
-python scripts/image_sample_compose_stable_diffusion.py --prompt "mystical trees | A magical pond | dark" --weights "1 | 1 | -1" --scale 7.5 --steps 50 --seed 2
+python scripts/image_sample_compose_stable_diffusion.py --prompt "mystical trees | A magical pond | dark" --weights "7.5 | 7.5 | -7.5" --scale 7.5 --steps 50 --seed 2
 ```
 
 Compose natural language descriptions using pretrained [GLIDE](https://github.com/openai/glide-text2im):

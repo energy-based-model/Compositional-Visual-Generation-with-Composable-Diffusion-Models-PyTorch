@@ -99,10 +99,10 @@ def model_fn(x_t, ts, **kwargs):
     combined = th.cat([half] * x_t.size(0), dim=0)
     model_out = model(combined, ts, **kwargs)
     eps, rest = model_out[:, :3], model_out[:, 3:]
-    cond_eps = eps[masks].mean(dim=0, keepdim=True)
-    # cond_eps = (coefficients * eps[masks]).sum(dim=0)[None]
-    uncond_eps = eps[~masks].mean(dim=0, keepdim=True)
-    half_eps = uncond_eps + guidance_scale * (cond_eps - uncond_eps)
+    cond_eps = eps[masks]
+    uncond_eps = eps[~masks]
+    # assume weights are equal to guidance scale
+    half_eps = uncond_eps + (guidance_scale * (cond_eps - uncond_eps)).sum(dim=0, keepdim=True)
     eps = th.cat([half_eps] * x_t.size(0), dim=0)
     return th.cat([eps, rest], dim=1)
 
