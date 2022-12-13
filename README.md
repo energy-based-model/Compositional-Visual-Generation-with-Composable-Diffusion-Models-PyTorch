@@ -1,4 +1,4 @@
-# Composable Diffusion 
+# Composable Diffusion
 ## We propose to use conjunction and negation (negative prompts) operators for compositional generation with conditional diffusion models.
 
 ### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf) | [Google Colab][composable-demo] | [Huggingface][huggingface-demo]
@@ -51,6 +51,7 @@ This is the official codebase for **Compositional Visual Generation with Composa
 ## **News**
 
 --------------------------------------------------------------------------------------------------------
+* <b>12/13/22</b>: ```stabilityai/stable-diffusion-2-1-base``` and other updated versions can now be used for compositional generation. (see [here](https://github.com/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/scripts/image_sample_compose_stable_diffusion.py)!)
 * <b>10/10/22</b>: Our proposed operators have been added into [stable-diffusion-webui-conjunction](https://github.com/AUTOMATIC1111/stable-diffusion-webui/commit/c26732fbee2a57e621ac22bf70decf7496daa4cd)!
 * <b>09/08/22</b>: Our paper is on [MIT News](https://news.mit.edu/2022/ai-system-makes-models-like-dall-e-2-more-creative-0908) and [MIT CSAIL News](https://www.csail.mit.edu/news/ai-system-makes-models-dall-e-2-more-creative)!
 * Now you can try to use compose **[Stable-Diffusion](https://github.com/CompVis/stable-diffusion)** Model using our [![][huggingface]][huggingface-demo] or [![][colab]][composable-demo] to sample 512x512 images.
@@ -72,6 +73,7 @@ To install this package, clone this repository and then run:
 
 ```
 pip install -e .
+pip install diffusers==0.10.2
 ```
 --------------------------------------------------------------------------------------------------------
 ## Inference
@@ -83,6 +85,7 @@ The [demo](notebooks/demo.ipynb) [![][colab]][composable-demo] notebook shows ho
 Compose natural language descriptions using [Stable-Diffusion](https://github.com/CompVis/stable-diffusion):
 ```
 # Conjunction (AND) by specifying positive weights
+# weights can be adjusted, otherwise will be the same as scale
 python scripts/image_sample_compose_stable_diffusion.py --prompt "mystical trees | A magical pond | dark" --weights "7.5 | 7.5 | 7.5" --scale 7.5 --steps 50 --seed 2
 ```
 ```
