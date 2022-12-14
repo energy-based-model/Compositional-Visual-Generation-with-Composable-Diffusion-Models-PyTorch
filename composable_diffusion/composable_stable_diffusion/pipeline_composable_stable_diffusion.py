@@ -509,9 +509,10 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
             latents,
         )
 
-        # copy the latents for each prompt we need to compose
+        # composable diffusion
         if isinstance(prompt, list) and batch_size == 1:
-            latents = latents.repeat(len(prompt), 1, 1, 1)
+            # remove extra unconditional embedding
+            text_embeddings = text_embeddings[len(prompt)-1:]
 
         # 6. Prepare extra step kwargs. TODO: Logic should ideally just be moved out of the pipeline
         extra_step_kwargs = self.prepare_extra_step_kwargs(generator, eta)
@@ -525,7 +526,12 @@ class ComposableStableDiffusionPipeline(DiffusionPipeline):
                 latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)
 
                 # predict the noise residual
-                noise_pred = self.unet(latent_model_input, t, encoder_hidden_states=text_embeddings).sample
+                noise_pred = []
+                for j in range(text_embeddings.shape[0]):
+                    noise_pred.append(
+                        self.unet(latent_model_input[:1], t, encoder_hidden_states=text_embeddings[j:j+1]).sample
+                    )
+                noise_pred = torch.cat(noise_pred, dim=0)
 
                 # perform guidance
                 if do_classifier_free_guidance:
