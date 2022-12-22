@@ -7,6 +7,11 @@ setup(
         "composable_diffusion.clip",
         "composable_diffusion.tokenizer",
         "composable_diffusion.composable_stable_diffusion",
+        "point_e",
+        "point_e.diffusion",
+        "point_e.evals",
+        "point_e.models",
+        "point_e.util",
     ],
     package_data={
         "composable_diffusion.tokenizer": [
@@ -29,8 +34,18 @@ setup(
         "blobfile",
         "torchvision",
         "diffuser",
-        "transformers"
+        "transformers",
+        "filelock",
+        "fire",
+        "humanize",
+        "requests",
+        "tqdm",
+        "matplotlib",
+        "scikit-image",
+        "scipy",
+        "clip @ git+https://github.com/openai/CLIP.git",
+        "open3d"
     ],
     author="nanliu",
-    version='2.0',
+    version='3.0',
 )

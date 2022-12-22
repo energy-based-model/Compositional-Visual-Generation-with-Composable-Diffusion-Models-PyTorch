@@ -127,12 +127,22 @@ class PointCloudSampler:
             if samples is not None:
                 stage_model_kwargs["low_res"] = samples
             if hasattr(model, "cached_model_kwargs"):
-                stage_model_kwargs = model.cached_model_kwargs(batch_size, stage_model_kwargs)
+                # compositional operator
+                if "text" in stage_model_kwargs:
+                    # compute text embedding one by one
+                    embeddings = []
+                    for i in range(len(stage_model_kwargs['texts'])):
+                        embed = model.cached_model_kwargs(batch_size, {'texts': [stage_model_kwargs['texts'][i]]})
+                        embeddings.append(embed["embeddings"])
+                    stage_model_kwargs["embeddings"] = torch.cat(embeddings, dim=0)
+                    del stage_model_kwargs['texts']
+                else:
+                    stage_model_kwargs = model.cached_model_kwargs(batch_size, stage_model_kwargs)
             sample_shape = (batch_size, 3 + len(self.aux_channels), stage_num_points)
 
             if stage_guidance_scale != 1 and stage_guidance_scale != 0:
                 for k, v in stage_model_kwargs.copy().items():
-                    stage_model_kwargs[k] = torch.cat([v, torch.zeros_like(v)], dim=0)
+                    stage_model_kwargs[k] = torch.cat([v, torch.zeros_like(v[:1])], dim=0)
 
             if stage_use_karras:
                 samples_it = karras_sample_progressive(

@@ -168,11 +168,13 @@ def karras_sample_progressive(
     if guidance_scale != 0 and guidance_scale != 1:
 
         def guided_denoiser(x_t, sigma):
-            x_t = th.cat([x_t, x_t], dim=0)
-            sigma = th.cat([sigma, sigma], dim=0)
+            size = model_kwargs["embeddings"].shape[0]
+            x_t = th.cat([x_t] * size, dim=0)
+            sigma = th.cat([sigma] * size, dim=0)
             x_0 = denoiser(x_t, sigma)
-            cond_x_0, uncond_x_0 = th.split(x_0, len(x_0) // 2, dim=0)
-            x_0 = uncond_x_0 + guidance_scale * (cond_x_0 - uncond_x_0)
+            print(x_0.shape)
+            cond_x_0, uncond_x_0 = x_0[:-1], x_0[-1:]
+            x_0 = uncond_x_0 + (guidance_scale * (cond_x_0 - uncond_x_0)).sum(dim=0, keepdims=True)
             return x_0
 
     else:
