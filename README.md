@@ -8,9 +8,9 @@
 
 ![](samples/a%20green%20avocado_a%20chair.gif)|  ![](samples/a%20lamp_a%20marble%20table.gif)  | ![](samples/a%20toilet_a%20chair.gif) 
 :-------------------------:|:----------------------------------------------:|:-------------------------:
-A green avocado AND A chair |           A lamp AND A marble table            | A toilet AND A chair
-![](samples/a%20couch_a%20boat.gif)  | ![](samples/a%20monitor_a%20brown%20couch.gif) | ![](samples/a%20chair_a%20cake.gif)
-A couch AND A boat |          A monitor AND A brown couch           | A chair AND a cake
+```A green avocado AND A chair```|```A lamp AND A marble table```| ```A toilet AND A chair```
+![](samples/a%20couch_a%20boat.gif)| ![](samples/a%20monitor_a%20brown%20couch.gif) | ![](samples/a%20chair_a%20cake.gif)
+```A couch AND A boat``` |          ```A monitor AND A brown couch```           | ```A chair AND A cake```
 
 
 
