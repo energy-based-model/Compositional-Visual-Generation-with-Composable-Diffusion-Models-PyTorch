@@ -4,6 +4,29 @@
 ### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf) | [Google Colab][composable-demo] | [Huggingface][huggingface-demo]
 [![][colab]][composable-demo] [![][huggingface]][huggingface-demo]
 
+<hr>
+This is the official codebase for **Compositional Visual Generation with Composable Diffusion Models**.
+
+[Compositional Visual Generation with Composable Diffusion Models](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/)
+    <br>
+    [Nan Liu](https://nanliu.io) <sup>1*</sup>,
+    [Shuang Li](https://people.csail.mit.edu/lishuang) <sup>2*</sup>,
+    [Yilun Du](https://yilundu.github.io) <sup>2*</sup>,
+    [Antonio Torralba](https://groups.csail.mit.edu/vision/torralbalab/) <sup>2</sup>,
+    [Joshua B. Tenenbaum](https://mitibmwatsonailab.mit.edu/people/joshua-tenenbaum/) <sup>2</sup>
+    <br>
+    <sup>*</sup> Equal Contributation
+    <br>
+    <sup>1</sup>UIUC, <sup>2</sup>MIT CSAIL
+    <br>
+    [ECCV 2022](https://arxiv.org/pdf/2206.01714.pdf) / [MIT News](https://news.mit.edu/2022/ai-system-makes-models-like-dall-e-2-more-creative-0908) / [MIT CSAIL News](https://www.csail.mit.edu/news/ai-system-makes-models-dall-e-2-more-creative)
+
+[colab]: <https://colab.research.google.com/assets/colab-badge.svg>
+[huggingface]: <https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue>
+[composable-demo]: <https://colab.research.google.com/github/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/notebooks/demo.ipynb>
+[huggingface-demo]: <https://huggingface.co/spaces/Shuang59/Composable-Diffusion>
+<hr>
+
 ## Composed 2D Image Results using **[Stable-Diffusion](https://github.com/CompVis/stable-diffusion)**.
 ![](samples/example1_A.gif)  |  ![](samples/example1_N.gif)
 :-------------------------:|:-------------------------:
@@ -27,6 +50,8 @@
 2. More discussions and results about our proposed methods can be found in [Reddit Post 1](https://www.reddit.com/r/StableDiffusion/comments/xwplfv/and_prompt_combinations_just_landed_in/), [Reddit Post 2](https://www.reddit.com/r/StableDiffusion/comments/xf5jow/compositional_diffusion/) and [Reddit Post 3](https://www.reddit.com/r/StableDiffusion/comments/xoq7ik/composable_diffusion_a_new_development_to_greatly/)!
 3. Some prompts are borrowed from [Lexica](https://lexica.art/)!
 
+<hr>
+
 ## Composed 3D Mesh Results using **[Point-E](https://github.com/openai/point-e)**.
 
 ![](samples/a%20green%20avocado_a%20chair.gif)|  ![](samples/a%20lamp_a%20marble%20table.gif)  | ![](samples/a%20toilet_a%20chair.gif) 
@@ -34,29 +59,6 @@
 ```A green avocado AND A chair```|```A lamp AND A marble table```| ```A toilet AND A chair```
 ![](samples/a%20couch_a%20boat.gif)| ![](samples/a%20monitor_a%20brown%20couch.gif) | ![](samples/a%20chair_a%20cake.gif)
 ```A couch AND A boat``` |          ```A monitor AND A brown couch```           | ```A chair AND A cake```
-
-
-
-This is the official codebase for **Compositional Visual Generation with Composable Diffusion Models**.
-
-[Compositional Visual Generation with Composable Diffusion Models](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/)
-    <br>
-    [Nan Liu](https://nanliu.io) <sup>1*</sup>,
-    [Shuang Li](https://people.csail.mit.edu/lishuang) <sup>2*</sup>,
-    [Yilun Du](https://yilundu.github.io) <sup>2*</sup>,
-    [Antonio Torralba](https://groups.csail.mit.edu/vision/torralbalab/) <sup>2</sup>,
-    [Joshua B. Tenenbaum](https://mitibmwatsonailab.mit.edu/people/joshua-tenenbaum/) <sup>2</sup>
-    <br>
-    <sup>*</sup> Equal Contributation
-    <br>
-    <sup>1</sup>UIUC, <sup>2</sup>MIT CSAIL
-    <br>
-    [ECCV 2022](https://arxiv.org/pdf/2206.01714.pdf) / [MIT News](https://news.mit.edu/2022/ai-system-makes-models-like-dall-e-2-more-creative-0908) / [MIT CSAIL News](https://www.csail.mit.edu/news/ai-system-makes-models-dall-e-2-more-creative)
-
-[colab]: <https://colab.research.google.com/assets/colab-badge.svg>
-[huggingface]: <https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue>
-[composable-demo]: <https://colab.research.google.com/github/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/notebooks/demo.ipynb>
-[huggingface-demo]: <https://huggingface.co/spaces/Shuang59/Composable-Diffusion>
 
 ## **News**
 
