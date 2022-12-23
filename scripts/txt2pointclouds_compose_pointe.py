@@ -18,10 +18,9 @@ from point_e.util.plotting import plot_point_cloud
 from point_e.util.pc_to_mesh import marching_cubes_mesh
 from point_e.util.plotting import plot_point_cloud
 
-
 parser = argparse.ArgumentParser()
-parser.add_argument("--prompt", type=str,  nargs='+')
-parser.add_argument("--scale", type=float, nargs='+', default=3.0)
+parser.add_argument("--prompts", type=str, nargs='+')
+parser.add_argument("--weights", type=float, nargs='+', default=3.0)
 args = parser.parse_args()
 
 # create folders
@@ -60,8 +59,8 @@ sampler = PointCloudSampler(
     diffusions=[base_diffusion, upsampler_diffusion],
     num_points=[1024, 4096 - 1024],
     aux_channels=['R', 'G', 'B'],
-    guidance_scale=[args.scale, 0.0],
-    model_kwargs_key_filter=('texts', ''), # Do not condition the upsampler at all
+    guidance_scale=[args.weights, 0.0],
+    model_kwargs_key_filter=('texts', ''),  # Do not condition the upsampler at all
 )
 
 print('creating SDF model...')
@@ -72,6 +71,7 @@ model.eval()
 print('loading SDF model...')
 model.load_state_dict(load_checkpoint(name, device))
 
+
 def generate_pcd(prompt_list):
     # Produce a sample from the model.
     samples = None
@@ -79,17 +79,19 @@ def generate_pcd(prompt_list):
         samples = x
     return samples
 
+
 def generate_fig(samples):
     pc = sampler.output_to_point_clouds(samples)[0]
-    fig = plot_point_cloud(pc, grid_size=3, fixed_bounds=((-0.75, -0.75, -0.75),(0.75, 0.75, 0.75)))
+    fig = plot_point_cloud(pc, grid_size=3, fixed_bounds=((-0.75, -0.75, -0.75), (0.75, 0.75, 0.75)))
     return fig, pc
+
 
 def generate_mesh(pc):
     mesh = marching_cubes_mesh(
         pc=pc,
         model=model,
         batch_size=4096,
-        grid_size=128, # increase to 128 for resolution used in evals
+        grid_size=128,  # increase to 128 for resolution used in evals
         progress=True,
     )
     return mesh
@@ -132,8 +134,8 @@ def generate_video(mesh_path):
 
 if __name__ == '__main__':
     # Set a prompt to condition on.
-    file_name = "_".join(args.prompt)
-    pcd = generate_pcd(args.prompt)
+    file_name = "_".join(args.prompts)
+    pcd = generate_pcd(args.prompts)
 
     # save fig visualization
     fig, pc = generate_fig(pcd)
@@ -141,7 +143,7 @@ if __name__ == '__main__':
 
     # save mesh file
     mesh = generate_mesh(pc)
-    mesh_path = os.path.join(mesh_folder, f'{file_name}_{args.scale}.ply')
+    mesh_path = os.path.join(mesh_folder, f'{file_name}_{args.weights}.ply')
     with open(mesh_path, 'wb') as f:
         mesh.write_ply(f)
 
@@ -149,30 +151,3 @@ if __name__ == '__main__':
     image_frames = generate_video(mesh_path)
     gif_path = os.path.join(video_folder, f'{file_name}.gif')
     image_frames[0].save(gif_path, save_all=True, optimizer=False, duration=5, append_images=image_frames[1:], loop=0)
-
-
-    # objects = ["a fridge", "a car", "a lamp", "a table", "a desk", "a suitcase",
-    #            "a ball", "a bottle", "a tv", "a boat", "a cat", "a chair", "a dog", "a tree", "a house",
-    #            "a cake", "a pizza", "an apple", "an orange", "a flower", "a hot dog"]
-    #
-    # for obj1 in objects:
-    #     for obj2 in objects:
-    #         if obj1 != obj2:
-    #             prompts = [obj1, obj2]
-    #             file_name = "_".join(prompts)
-    #             pcd = generate_pcd(prompts)
-    #
-    #             # save fig visualization
-    #             fig, pc = generate_fig(pcd)
-    #             fig.savefig(os.path.join(plt_plot_folder, f'{file_name}.png'))
-    #
-    #             # save mesh file
-    #             mesh = generate_mesh(pc)
-    #             mesh_path = os.path.join(mesh_folder, f'{file_name}_{args.scale}.ply')
-    #             with open(mesh_path, 'wb') as f:
-    #                 mesh.write_ply(f)
-    #
-    #             # generate video
-    #             image_frames = generate_video(mesh_path)
-    #             gif_path = os.path.join(video_folder, f'{file_name}.gif')
-    #             image_frames[0].save(gif_path, save_all=True, optimizer=False, duration=5, append_images=image_frames[1:], loop=0)
