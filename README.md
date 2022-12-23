@@ -6,11 +6,11 @@
 
 ## Composed 3D Mesh Results using **[Point-E](https://github.com/openai/point-e)**.
 
-![](samples/a green avocado_a chair.gif)  | ![](samples/a lamp_a marble table.gif) | ![](samples/a toilet_a chair.gif) 
-:-------------------------:|:-------------------------:|:-------------------------:
-A green avocado AND A chair |  A lamp AND A marble table | A toilet AND A chair
-![](samples/a couch_a boat.gif)  | ![](samples/a monitor_a brown couch.gif) | ![](samples/a chair_a cake.gif)
-A couch AND A boat |  A monitor AND A brown couch | A chair AND a cake
+![](samples/a%20green%20avocado_a%20chair.gif)|  ![](samples/a%20lamp_a%20marble%20table.gif)  | ![](samples/a%20toilet_a%20chair.gif) 
+:-------------------------:|:----------------------------------------------:|:-------------------------:
+A green avocado AND A chair |           A lamp AND A marble table            | A toilet AND A chair
+![](samples/a%20couch_a%20boat.gif)  | ![](samples/a%20monitor_a%20brown%20couch.gif) | ![](samples/a%20chair_a%20cake.gif)
+A couch AND A boat |          A monitor AND A brown couch           | A chair AND a cake
 
 
 
