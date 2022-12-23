@@ -4,7 +4,18 @@
 ### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf) | [Google Colab][composable-demo] | [Huggingface][huggingface-demo]
 [![][colab]][composable-demo] [![][huggingface]][huggingface-demo]
 
-![](images/example1_A.gif)  |  ![](images/example1_N.gif)
+## Composed 3D Mesh Results using **[Point-E](https://github.com/openai/point-e)**.
+
+![](samples/a green avocado_a chair.gif)  | ![](samples/a lamp_a marble table.gif) | ![](samples/a toilet_a chair.gif) 
+:-------------------------:|:-------------------------:|:-------------------------:
+A green avocado AND A chair |  A lamp AND A marble table | A toilet AND A chair
+![](samples/a couch_a boat.gif)  | ![](samples/a monitor_a brown couch.gif) | ![](samples/a chair_a cake.gif)
+A couch AND A boat |  A monitor AND A brown couch | A chair AND a cake
+
+
+
+## Composed 2D Image Results using **[Stable-Diffusion](https://github.com/CompVis/stable-diffusion)**.
+![](samples/example1_A.gif)  |  ![](samples/example1_N.gif)
 :-------------------------:|:-------------------------:
 
 | Image | Positive Prompts (AND Operator) | Negative Prompts (NOT Operator) |
@@ -13,7 +24,7 @@
 | ```Right``` | ```["A stone castle surrounded by lakes and trees, fantasy, wallpaper, concept art, extremely detailed"]``` | ```["Black and white"]``` |
 
 
-![](images/example2_A.gif)  |  ![](images/example2_N.gif)
+![](samples/example2_A.gif)  |  ![](samples/example2_N.gif)
 :-------------------------:|:-------------------------:
 
 | Image | Positive Prompts (AND Operator) | Negative Prompts (NOT Operator) |
@@ -51,6 +62,7 @@ This is the official codebase for **Compositional Visual Generation with Composa
 ## **News**
 
 --------------------------------------------------------------------------------------------------------
+* <b>12/22/22</b>: Now you can use our code to apply compositional operator (AND) to **[Point-E](https://github.com/openai/point-e)**!
 * <b>12/13/22</b>: ```stabilityai/stable-diffusion-2-1-base``` and other updated versions can now be used for compositional generation. (see [here](https://github.com/energy-based-model/Compositional-Visual-Generation-with-Composable-Diffusion-Models-PyTorch/blob/main/scripts/image_sample_compose_stable_diffusion.py)!)
 * <b>10/10/22</b>: Our proposed operators have been added into [stable-diffusion-webui-conjunction](https://github.com/AUTOMATIC1111/stable-diffusion-webui/commit/c26732fbee2a57e621ac22bf70decf7496daa4cd)!
 * <b>09/08/22</b>: Our paper is on [MIT News](https://news.mit.edu/2022/ai-system-makes-models-like-dall-e-2-more-creative-0908) and [MIT CSAIL News](https://www.csail.mit.edu/news/ai-system-makes-models-dall-e-2-more-creative)!
@@ -74,6 +86,7 @@ To install this package, clone this repository and then run:
 ```
 pip install -e .
 pip install diffusers==0.10.2
+pip install open3d==0.16.0
 ```
 --------------------------------------------------------------------------------------------------------
 ## Inference
@@ -82,6 +95,11 @@ pip install diffusers==0.10.2
 The [demo](notebooks/demo.ipynb) [![][colab]][composable-demo] notebook shows how to compose natural language descriptions, and CLEVR objects for image generation.
 
 ### Python
+Compose natural language descriptions to generate 3D mesh using [Point-E](https://github.com/openai/point-e):
+```
+python scripts/txt2pointclouds_compose_pointe.py --prompt "a cake" "a house" --scale 3 3
+```
+
 Compose natural language descriptions using [Stable-Diffusion](https://github.com/CompVis/stable-diffusion):
 ```
 # Conjunction (AND) by specifying positive weights

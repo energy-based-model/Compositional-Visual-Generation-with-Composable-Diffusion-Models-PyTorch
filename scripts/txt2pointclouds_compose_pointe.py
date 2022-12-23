@@ -1,30 +1,39 @@
+import os
+import time
 import torch
+import glob
+import argparse
+import numpy as np
+import open3d as o3d
 import matplotlib.pyplot as plt
+import open3d.visualization.rendering as rendering
 
+from PIL import Image
 from tqdm.auto import tqdm
 from point_e.diffusion.configs import DIFFUSION_CONFIGS, diffusion_from_config
 from point_e.diffusion.sampler import PointCloudSampler
 from point_e.models.download import load_checkpoint
 from point_e.models.configs import MODEL_CONFIGS, model_from_config
 from point_e.util.plotting import plot_point_cloud
-from PIL import Image
 from point_e.util.pc_to_mesh import marching_cubes_mesh
 from point_e.util.plotting import plot_point_cloud
 
-import os
-import argparse
-import open3d as o3d
-import open3d.visualization.rendering as rendering
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--prompt", type=str,  nargs='+')
+parser.add_argument("--scale", type=float, nargs='+', default=3.0)
+args = parser.parse_args()
 
 # create folders
 plt_plot_folder = './plt_results'
 mesh_folder = './mesh_results'
+viewpoint_folder = './frame_results'
+video_folder = './video_results'
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--prompt", type=str, help="use '|' as the delimiter to compose separate sentences.")
-parser.add_argument("--scale", type=float, default=3.0)
-args = parser.parse_args()
+os.makedirs(plt_plot_folder, exist_ok=True)
+os.makedirs(mesh_folder, exist_ok=True)
+os.makedirs(viewpoint_folder, exist_ok=True)
+os.makedirs(video_folder, exist_ok=True)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -55,19 +64,6 @@ sampler = PointCloudSampler(
     model_kwargs_key_filter=('texts', ''), # Do not condition the upsampler at all
 )
 
-# Set a prompt to condition on.
-prompts = [x.strip() for x in args.prompt.split("|")]
-file_name = "_".join(prompts)
-
-# Produce a sample from the model.
-samples = None
-for x in tqdm(sampler.sample_batch_progressive(batch_size=1, model_kwargs=dict(texts=prompts))):
-    samples = x
-
-pc = sampler.output_to_point_clouds(samples)[0]
-fig = plot_point_cloud(pc, grid_size=3, fixed_bounds=((-0.75, -0.75, -0.75),(0.75, 0.75, 0.75)))
-fig.savefig(os.path.join(plt_plot_folder, f'{file_name}.png'))
-
 print('creating SDF model...')
 name = 'sdf'
 model = model_from_config(MODEL_CONFIGS[name], device)
@@ -76,22 +72,33 @@ model.eval()
 print('loading SDF model...')
 model.load_state_dict(load_checkpoint(name, device))
 
-mesh = marching_cubes_mesh(
-    pc=pc,
-    model=model,
-    batch_size=4096,
-    grid_size=128, # increase to 128 for resolution used in evals
-    progress=True,
-)
+def generate_pcd(prompt_list):
+    # Produce a sample from the model.
+    samples = None
+    for x in tqdm(sampler.sample_batch_progressive(batch_size=1, model_kwargs=dict(texts=prompt_list))):
+        samples = x
+    return samples
 
-with open(os.path.join(mesh_folder, f'{file_name}_{args.scale}.ply'), 'wb') as f:
-    mesh.write_ply(f)
+def generate_fig(samples):
+    pc = sampler.output_to_point_clouds(samples)[0]
+    fig = plot_point_cloud(pc, grid_size=3, fixed_bounds=((-0.75, -0.75, -0.75),(0.75, 0.75, 0.75)))
+    return fig, pc
+
+def generate_mesh(pc):
+    mesh = marching_cubes_mesh(
+        pc=pc,
+        model=model,
+        batch_size=4096,
+        grid_size=128, # increase to 128 for resolution used in evals
+        progress=True,
+    )
+    return mesh
 
 
 # generate 360 video
-def generate_video():
+def generate_video(mesh_path):
     render = rendering.OffscreenRenderer(640, 480)
-    mesh = o3d.io.read_triangle_mesh(args.file)
+    mesh = o3d.io.read_triangle_mesh(mesh_path)
     mesh.compute_vertex_normals()
 
     mat = o3d.visualization.rendering.MaterialRecord()
@@ -105,27 +112,67 @@ def generate_video():
         render.scene.add_geometry('mesh', mesh, mat)
 
     def generate_images():
-        index = 0
-        for i in range(128):
+        for i in range(64):
             # Rotation
             R = mesh.get_rotation_matrix_from_xyz((0, 0, np.pi / 32))
             mesh.rotate(R, center=(0, 0, 0))
             # Update geometry
             update_geometry()
             img = render.render_to_image()
-            o3d.io.write_image(folder_name + "/{:05d}.png".format(index), img, quality=100)
-            index += 1
+            o3d.io.write_image(os.path.join(viewpoint_folder, "{:05d}.jpg".format(i)), img, quality=100)
             time.sleep(0.05)
 
     generate_images()
     image_list = []
-    for filename in sorted(glob.glob(f'{folder_name}/*.png')):  # assuming gif
+    for filename in sorted(glob.glob(f'{viewpoint_folder}/*.jpg')):  # assuming gif
         im = Image.open(filename)
         image_list.append(im)
-
-    image_list[0].save(os.path.join(mesh_folder, f'{file_name}.gif'), save_all=True,
-                       optimizer=False, duration=5, append_images=image_list[1:], loop=0)
+    return image_list
 
 
-# generate video
-generate_video()
+if __name__ == '__main__':
+    # Set a prompt to condition on.
+    file_name = "_".join(args.prompt)
+    pcd = generate_pcd(args.prompt)
+
+    # save fig visualization
+    fig, pc = generate_fig(pcd)
+    fig.savefig(os.path.join(plt_plot_folder, f'{file_name}.png'))
+
+    # save mesh file
+    mesh = generate_mesh(pc)
+    mesh_path = os.path.join(mesh_folder, f'{file_name}_{args.scale}.ply')
+    with open(mesh_path, 'wb') as f:
+        mesh.write_ply(f)
+
+    # generate video
+    image_frames = generate_video(mesh_path)
+    gif_path = os.path.join(video_folder, f'{file_name}.gif')
+    image_frames[0].save(gif_path, save_all=True, optimizer=False, duration=5, append_images=image_frames[1:], loop=0)
+
+
+    # objects = ["a fridge", "a car", "a lamp", "a table", "a desk", "a suitcase",
+    #            "a ball", "a bottle", "a tv", "a boat", "a cat", "a chair", "a dog", "a tree", "a house",
+    #            "a cake", "a pizza", "an apple", "an orange", "a flower", "a hot dog"]
+    #
+    # for obj1 in objects:
+    #     for obj2 in objects:
+    #         if obj1 != obj2:
+    #             prompts = [obj1, obj2]
+    #             file_name = "_".join(prompts)
+    #             pcd = generate_pcd(prompts)
+    #
+    #             # save fig visualization
+    #             fig, pc = generate_fig(pcd)
+    #             fig.savefig(os.path.join(plt_plot_folder, f'{file_name}.png'))
+    #
+    #             # save mesh file
+    #             mesh = generate_mesh(pc)
+    #             mesh_path = os.path.join(mesh_folder, f'{file_name}_{args.scale}.ply')
+    #             with open(mesh_path, 'wb') as f:
+    #                 mesh.write_ply(f)
+    #
+    #             # generate video
+    #             image_frames = generate_video(mesh_path)
+    #             gif_path = os.path.join(video_folder, f'{file_name}.gif')
+    #             image_frames[0].save(gif_path, save_all=True, optimizer=False, duration=5, append_images=image_frames[1:], loop=0)

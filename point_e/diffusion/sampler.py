@@ -2,7 +2,7 @@
 Helpers for sampling from a single- or multi-stage point cloud diffusion model.
 """
 
-from typing import Any, Callable, Dict, Iterator, List, Sequence, Tuple
+from typing import Any, Callable, Dict, Iterator, List, Sequence, Tuple, Union
 
 import torch
 import torch.nn as nn
@@ -31,7 +31,7 @@ class PointCloudSampler:
         num_points: Sequence[int],
         aux_channels: Sequence[str],
         model_kwargs_key_filter: Sequence[str] = ("*",),
-        guidance_scale: Sequence[float] = (3.0, 3.0),
+        guidance_scale: Sequence[Union[tuple, float]] = (3.0, 3.0),
         clip_denoised: bool = True,
         use_karras: Sequence[bool] = (True, True),
         karras_steps: Sequence[int] = (64, 64),
@@ -128,7 +128,7 @@ class PointCloudSampler:
                 stage_model_kwargs["low_res"] = samples
             if hasattr(model, "cached_model_kwargs"):
                 # compositional operator
-                if "text" in stage_model_kwargs:
+                if "texts" in stage_model_kwargs:
                     # compute text embedding one by one
                     embeddings = []
                     for i in range(len(stage_model_kwargs['texts'])):
@@ -139,6 +139,10 @@ class PointCloudSampler:
                 else:
                     stage_model_kwargs = model.cached_model_kwargs(batch_size, stage_model_kwargs)
             sample_shape = (batch_size, 3 + len(self.aux_channels), stage_num_points)
+
+            # assume when there are multiple weights, we use classifier-free (all weights > 1)
+            if isinstance(stage_guidance_scale, list) and len(stage_guidance_scale) == 1:
+                stage_guidance_scale = stage_guidance_scale[0]
 
             if stage_guidance_scale != 1 and stage_guidance_scale != 0:
                 for k, v in stage_model_kwargs.copy().items():

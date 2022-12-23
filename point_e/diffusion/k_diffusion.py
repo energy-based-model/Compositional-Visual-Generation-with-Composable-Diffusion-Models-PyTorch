@@ -165,15 +165,20 @@ def karras_sample_progressive(
     else:
         raise NotImplementedError
 
-    if guidance_scale != 0 and guidance_scale != 1:
+    if isinstance(guidance_scale, float):
+        guidance_scale = [guidance_scale]
 
+    if all(x > 1 for x in guidance_scale):
+        # specify multiple weights for each prompt
+        guidance_scale = th.tensor(guidance_scale).reshape(-1, 1, 1).to(device)
         def guided_denoiser(x_t, sigma):
             size = model_kwargs["embeddings"].shape[0]
             x_t = th.cat([x_t] * size, dim=0)
             sigma = th.cat([sigma] * size, dim=0)
             x_0 = denoiser(x_t, sigma)
-            print(x_0.shape)
             cond_x_0, uncond_x_0 = x_0[:-1], x_0[-1:]
+            assert guidance_scale.shape[0] == 1 or guidance_scale.shape[0] == cond_x_0.shape[0], \
+                "please specify the same number of weights as the number of prompts you wish to compose"
             x_0 = uncond_x_0 + (guidance_scale * (cond_x_0 - uncond_x_0)).sum(dim=0, keepdims=True)
             return x_0
 
