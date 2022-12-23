@@ -28,6 +28,7 @@ options['num_classes'] = '2'
 parser = argparse.ArgumentParser()
 add_dict_to_argparser(parser, options)
 parser.add_argument('--ckpt_path', required=True)
+parser.add_argument('--weights', type=float, nargs="+", default=7.5)
 
 args = parser.parse_args()
 ckpt_path = args.ckpt_path
@@ -56,7 +57,7 @@ def show_images(batch: th.Tensor, file_name: str = 'result.png'):
 
 
 batch_size = 1
-guidance_scale = 10.0
+
 
 # Tune this parameter to control the sharpness of 256x256 images.
 # A value of 1.0 is sharper, but sometimes results in grainy artifacts.
@@ -68,9 +69,14 @@ upsample_temp = 0.980
 ##############################
 
 # Create the position label
+weights = args.weights
+# [-1, -1] is unconditional score
 positions = [[0.1, 0.5], [0.3, 0.5], [0.5, 0.5], [0.7, 0.5], [0.9, 0.5], [-1, -1]]  # horizontal
+assert len(weights) == 1 or len(weights) == len(positions) - 1, \
+    "the number of weights should be the same as the number of prompts."
 full_batch_size = batch_size * len(positions)
 masks = [True] * (len(positions) - 1) + [False]
+weights = th.tensor(weights).reshape(-1, 1, 1, 1).to(device)
 
 model_kwargs = dict(
     y=th.tensor(positions, dtype=th.float, device=device),
@@ -83,11 +89,9 @@ def model_fn(x_t, ts, **kwargs):
     combined = th.cat([half] * kwargs['y'].size(0), dim=0)
     model_out = model(combined, ts, **kwargs)
     eps, rest = model_out[:, :3], model_out[:, 3:]
-    masks = kwargs.get('masks')
-    cond_eps = eps[masks]
-    uncond_eps = eps[~masks]
+    cond_eps, uncond_eps = eps[:-1], eps[-1:]
     # assume weights are equal to guidance scale
-    half_eps = uncond_eps + (guidance_scale * (cond_eps - uncond_eps)).sum(dim=0, keepdim=True)
+    half_eps = uncond_eps + (weights * (cond_eps - uncond_eps)).sum(dim=0, keepdim=True)
     eps = th.cat([half_eps] * x_t.size(0), dim=0)
     return th.cat([eps, rest], dim=1)
 

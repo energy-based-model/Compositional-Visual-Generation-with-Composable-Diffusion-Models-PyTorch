@@ -11,9 +11,9 @@ from composable_diffusion.model_creation import (
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--steps', type=int, default=100)
-parser.add_argument('--scale', type=float, default=10)
+parser.add_argument('--weights', type=float, nargs="+", default=7.5)
 parser.add_argument('--upsample_temp', type=float, default=0.98)
-parser.add_argument('--prompt', type=str, default='a camel | a forest', help="using `|` to compose multiple sentences")
+parser.add_argument('--prompts', type=str, nargs="+", default=["a camel", "a forest"])
 args = parser.parse_args()
 
 has_cuda = th.cuda.is_available()
@@ -51,10 +51,13 @@ def show_images(batch: th.Tensor, file_name):
     Image.fromarray(reshaped.numpy()).save(file_name)
 
 # Sampling parameters
-prompt = args.prompt
-prompts = [x.strip() for x in prompt.split('|')]
+prompts = args.prompts
+weights = args.weights
+assert len(weights) == 1 or len(weights) == len(masks) - 1, \
+    "the number of weights should be the same as the number of prompts."
 batch_size = 1
-guidance_scale = args.scale
+weights = th.tensor(weights).reshape(-1, 1, 1, 1).to(device)
+
 # Tune this parameter to control the sharpness of 256x256 images.
 # A value of 1.0 is sharper, but sometimes results in grainy artifacts.
 upsample_temp = args.upsample_temp
@@ -89,20 +92,15 @@ model_kwargs = dict(
     ),
 )
 
-masks = [True] * len(prompts) + [False]
-# coefficients = th.tensor([0.5, 0.5], device=device).reshape(-1, 1, 1, 1)
-masks = th.tensor(masks, dtype=th.bool, device=device)
-
 # Create a classifier-free guidance sampling function
 def model_fn(x_t, ts, **kwargs):
     half = x_t[:1]
     combined = th.cat([half] * x_t.size(0), dim=0)
     model_out = model(combined, ts, **kwargs)
     eps, rest = model_out[:, :3], model_out[:, 3:]
-    cond_eps = eps[masks]
-    uncond_eps = eps[~masks]
+    cond_eps, uncond_eps = eps[:-1], eps[-1:]
     # assume weights are equal to guidance scale
-    half_eps = uncond_eps + (guidance_scale * (cond_eps - uncond_eps)).sum(dim=0, keepdim=True)
+    half_eps = uncond_eps + (weights * (cond_eps - uncond_eps)).sum(dim=0, keepdim=True)
     eps = th.cat([half_eps] * x_t.size(0), dim=0)
     return th.cat([eps, rest], dim=1)
 
