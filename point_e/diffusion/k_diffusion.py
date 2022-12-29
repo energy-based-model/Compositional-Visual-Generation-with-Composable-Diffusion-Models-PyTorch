@@ -168,7 +168,7 @@ def karras_sample_progressive(
     if isinstance(guidance_scale, float):
         guidance_scale = [guidance_scale]
 
-    if all(x > 1 for x in guidance_scale):
+    if all(abs(x) > 1 for x in guidance_scale):
         # specify multiple weights for each prompt
         guidance_scale = th.tensor(guidance_scale).reshape(-1, 1, 1).to(device)
         def guided_denoiser(x_t, sigma):
