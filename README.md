@@ -55,11 +55,11 @@ This is the official codebase for **Compositional Visual Generation with Composa
 
 ## Composed 3D Mesh Results using **[Point-E](https://github.com/openai/point-e)**.
 
-![](samples/a%20green%20avocado_a%20chair.gif)|  ![](samples/a%20lamp_a%20marble%20table.gif)  | ![](samples/a%20toilet_a%20chair.gif) 
+![](samples/a%20green%20avocado_a%20chair.gif)|               ![](samples/a%20chair_not%20chair%20legs.gif)                | ![](samples/a%20toilet_a%20chair.gif) 
 :-------------------------:|:----------------------------------------------:|:-------------------------:
-```A green avocado AND A chair```|```A lamp AND A marble table```| ```A toilet AND A chair```
+```A green avocado AND A chair```|        ```A lamp AND A marble table```         | ```A toilet AND A chair```
 ![](samples/a%20couch_a%20boat.gif)| ![](samples/a%20monitor_a%20brown%20couch.gif) | ![](samples/a%20chair_a%20cake.gif)
-```A couch AND A boat``` |          ```A monitor AND A brown couch```           | ```A chair AND A cake```
+```A couch AND A boat``` |       ```A monitor AND A brown couch```        | ```A chair AND A cake```
 
 ## **News**
 
