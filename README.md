@@ -107,11 +107,11 @@ Compose natural language descriptions using [Stable-Diffusion](https://github.co
 ```
 # Conjunction (AND) by specifying positive weights
 # weights can be adjusted, otherwise will be the same as scale
-python scripts/image_sample_compose_stable_diffusion.py --prompts "mystical trees" "A magical pond" "dark" --weights 7.5 7.5 7.5 --scale 7.5 --steps 50 --seed 2
+python scripts/image_sample_compose_stable_diffusion.py --prompts "mystical trees | A magical pond | dark" --weights "7.5 | 7.5 | 7.5" --scale 7.5 --steps 50 --seed 2
 ```
 ```
 # NEGATION (NOT) by specifying negative weights
-python scripts/image_sample_compose_stable_diffusion.py --prompts "mystical trees" "A magical pond" "dark" --weights 7.5 7.5 -7.5 --scale 7.5 --steps 50 --seed 2
+python scripts/image_sample_compose_stable_diffusion.py --prompts "mystical trees | A magical pond | dark" --weights "7.5 | 7.5 | -7.5" --scale 7.5 --steps 50 --seed 2
 ```
 
 Compose natural language descriptions using pretrained [GLIDE](https://github.com/openai/glide-text2im):
