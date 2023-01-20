@@ -23,16 +23,6 @@ args = parser.parse_args()
 has_cuda = th.cuda.is_available()
 device = th.device('cpu' if not has_cuda else 'cuda')
 
-from diffusers import LMSDiscreteScheduler, StableDiffusionPipeline
-
-pipe = StableDiffusionPipeline.from_pretrained(args.model_path).to(device)
-pipe.scheduler = DDPMScheduler.from_config(pipe.scheduler.config)
-pipe.safety_checker = None
-prompt = "a photo of an astronaut riding a horse on mars"
-image = pipe(prompt, num_inference_steps=1000).images[0]
-
-image.save("astronaut_rides_horse.png")
-
 prompts = args.prompts
 weights = args.weights
 scale = args.scale
