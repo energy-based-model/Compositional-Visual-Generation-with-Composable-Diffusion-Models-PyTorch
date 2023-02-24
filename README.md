@@ -190,10 +190,12 @@ If you need to manually download, the datasets used for training our models can 
 If you find our code useful for your research, please consider citing 
 
 ``` 
-@article{liu2022compositional,
-  title={Compositional Visual Generation with Composable Diffusion Models},
+@inproceedings{liu2022compositional,
+  title={Compositional visual generation with composable diffusion models},
   author={Liu, Nan and Li, Shuang and Du, Yilun and Torralba, Antonio and Tenenbaum, Joshua B},
-  journal={arXiv preprint arXiv:2206.01714},
-  year={2022}
+  booktitle={Computer Vision--ECCV 2022: 17th European Conference, Tel Aviv, Israel, October 23--27, 2022, Proceedings, Part XVII},
+  pages={423--439},
+  year={2022},
+  organization={Springer}
 }
 ```
