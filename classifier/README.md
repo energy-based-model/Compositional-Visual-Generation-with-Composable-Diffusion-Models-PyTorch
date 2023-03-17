@@ -30,10 +30,10 @@ python eval.py --dataset clevr_pos --checkpoint_dir results --im_size 128 --filt
 |                    Dataset                    | Link | 
 |:---------------------------------------------:| :---: | 
 |  CLEVR Relations Classifier Training Dataset  | https://www.dropbox.com/s/ptqtd0j771sgs7h/clevr_rel_128_30000.pickle?dl=0|
+| CLEVR 2D Position Classifier Training Dataset | https://www.dropbox.com/s/7etqyrwg9g854t4/clevr_pos_data_128_30000.npz?dl=0|
 |         CLEVR Relation Test Dataset 1         | https://www.dropbox.com/s/bfj4wjb4ksic6z2/clevr_generation_1_relations.npz?dl=0|
 |         CLEVR Relation Test Dataset 2         | https://www.dropbox.com/s/g59mscx6880j72h/clevr_generation_2_relations.npz?dl=0|
 |         CLEVR Relation Test Dataset 3         | https://www.dropbox.com/s/nvc2mdsixi7vu3i/clevr_generation_3_relations.npz?dl=0|
-| CLEVR 2D Position Classifier Training Dataset | https://www.dropbox.com/s/7etqyrwg9g854t4/clevr_pos_data_128_30000.npz?dl=0|
 |         CLEVR 2D Position Test Dataset 1         | https://www.dropbox.com/s/je1nbw463ic1urm/clevr_pos_5000_1.npz?dl=0|
 |         CLEVR 2D Position Test Dataset 2         | https://www.dropbox.com/s/8svd75vw1j7wmzj/clevr_pos_5000_2.npz?dl=0|
 |         CLEVR 2D Position Test Dataset 3         | https://www.dropbox.com/s/j3d32udsg1cewvc/clevr_pos_5000_3.npz?dl=0|
