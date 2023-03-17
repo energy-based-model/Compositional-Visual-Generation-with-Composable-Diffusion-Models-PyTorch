@@ -77,7 +77,7 @@ class Clevr2DPosDataset(Dataset):
         self.random_crop = random_crop
         self.random_flip = random_flip
 
-        data_path = '../../dataset/clevr_pos_data_128_30000.npz'
+        data_path = 'clevr_pos_data_128_30000.npz'
         data = np.load(data_path)
 
         # split == None --> use the whole dataset
