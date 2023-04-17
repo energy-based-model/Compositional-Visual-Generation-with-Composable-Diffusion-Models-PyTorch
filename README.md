@@ -1,4 +1,4 @@
-# Composable Diffusion
+# Composable Diffusion (ECCV 2022)
 ## We propose to use conjunction and negation (negative prompts) operators for compositional generation with conditional diffusion models (i.e., Stable Diffusion, Point-E, etc).
 
 ### [Project Page](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/) | [Paper](https://arxiv.org/pdf/2206.01714.pdf) | [Google Colab][composable-demo] | [Huggingface][huggingface-demo]
