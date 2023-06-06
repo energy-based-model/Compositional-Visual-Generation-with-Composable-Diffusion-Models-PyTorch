@@ -16,7 +16,7 @@ This is the official codebase for **Compositional Visual Generation with Composa
     [Antonio Torralba](https://groups.csail.mit.edu/vision/torralbalab/) <sup>2</sup>,
     [Joshua B. Tenenbaum](https://mitibmwatsonailab.mit.edu/people/joshua-tenenbaum/) <sup>2</sup>
     <br>
-    <sup>*</sup> Equal Contributation
+    <sup>*</sup> Equal Contribution
     <br>
     <sup>1</sup>UIUC, <sup>2</sup>MIT CSAIL
     <br>
