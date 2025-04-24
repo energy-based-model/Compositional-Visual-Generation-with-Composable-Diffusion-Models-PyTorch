@@ -11,7 +11,7 @@ This is the official codebase for **Compositional Visual Generation with Composa
 [Compositional Visual Generation with Composable Diffusion Models](https://energy-based-model.github.io/Compositional-Visual-Generation-with-Composable-Diffusion-Models/)
     <br>
     [Nan Liu](https://nanliu.io) <sup>1*</sup>,
-    [Shuang Li](https://people.csail.mit.edu/lishuang) <sup>2*</sup>,
+    [Shuang Li](https://shuangli59.github.io/) <sup>2*</sup>,
     [Yilun Du](https://yilundu.github.io) <sup>2*</sup>,
     [Antonio Torralba](https://groups.csail.mit.edu/vision/torralbalab/) <sup>2</sup>,
     [Joshua B. Tenenbaum](https://mitibmwatsonailab.mit.edu/people/joshua-tenenbaum/) <sup>2</sup>
